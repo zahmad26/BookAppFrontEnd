@@ -16,11 +16,12 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-outline-input": "^1.0.8",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
   },
-  "proxy": "http://localhost:5000/",
+  "proxy": "http://127.0.0.1:5000",
   "private": true
 }

@@ -3,12 +3,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ProfileScreen from './app/screens/ProfileScreen';
 import SignupScreen from './app/screens/SignupScreen';
-import SigninScreen from './app/screens/SigninScreen';
+import LoginScreen from './app/screens/LoginScreen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import APITestScreen from './app/screens/APITestScreen';
 
 export default function App() {
-  return <SigninScreen />;
+  return <ProfileScreen />;
 }
 
 const styles = StyleSheet.create({
