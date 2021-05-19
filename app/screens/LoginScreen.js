@@ -11,25 +11,28 @@ import {
 import axios from "axios";
 
 const LoginScreen = (props) => {
-  const [userName, setUserName] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loggedIn, setLoggedIn] = React.useState(true);
-const errMessage = "Incorrect Email or Password";
+  const errMessage = "Incorrect Email or Password";
 
   let user = {
-    email: userName,
+    email: email,
     password: password,
   };
 
   const login = () => {
     console.log("in Login", user);
-    axios.post("http://localhost:5000/api/users/login", user).then((res) => {
-      console.log("after api call", res);
-      setLoggedIn(true);
-    }).catch((error)=>{
-      console.log(errMessage);
-      setLoggedIn(false);
-    });
+    axios
+    .post("http://localhost:5000/api/users/login", user)
+      .then((res) => {
+        console.log("after api call", res);
+        setLoggedIn(true);
+      })
+      .catch((error) => {
+        console.log(errMessage);
+        setLoggedIn(false);
+      });
   };
 
   return (
@@ -42,8 +45,8 @@ const errMessage = "Incorrect Email or Password";
           <Text style={styles.heading}>Log In</Text>
           <TextInput
             style={styles.input}
-            onChangeText={setUserName}
-            value={userName}
+            onChangeText={setEmail}
+            value={email}
             placeholder="Email"
           />
           <TextInput
@@ -53,10 +56,14 @@ const errMessage = "Incorrect Email or Password";
             secureTextEntry
             placeholder="Password"
           />
-          <Text style={{ color: "red", fontSize: 17, paddingTop : 2 }}>{loggedIn? "" :errMessage}</Text>
+          <Text style={{ color: "red", fontSize: 17, paddingTop: 2 }}>
+            {loggedIn ? "" : errMessage}
+          </Text>
 
           <TouchableOpacity style={styles.signInButton} onPress={login}>
-            <Text style={{ color: "white", fontSize: 17, paddingTop : 2 }}>LOG IN</Text>
+            <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+              LOG IN
+            </Text>
           </TouchableOpacity>
           <Text style={{ marginTop: 30, fontSize: 14 }}>
             {" "}

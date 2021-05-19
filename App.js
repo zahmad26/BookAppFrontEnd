@@ -8,7 +8,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import APITestScreen from './app/screens/APITestScreen';
 
 export default function App() {
-  return <ProfileScreen />;
+  return <SignupScreen />;
 }
 
 const styles = StyleSheet.create({

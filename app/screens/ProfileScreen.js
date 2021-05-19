@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 import OutlineInput from "react-native-outline-input";
 import axios from "axios";
@@ -42,7 +43,7 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView>
       {/* <ImageBackground source={BackGroundImage} style={styles.bg}> */}
-
+<ScrollView>
       <ImageBackground
         style={styles.bg}
         source={require("../assets/transparent.png")}
@@ -51,7 +52,7 @@ const ProfileScreen = (props) => {
           <Text style={styles.heading}>My Profile</Text>
           <Image
             style={styles.profileImg}
-            source={require("../assets/profile-img.png")}
+            source={require("../assets/profile.png")}
           />
           <Text style={styles.name}>{userName}</Text>
           
@@ -87,6 +88,7 @@ const ProfileScreen = (props) => {
         </View>
       </ImageBackground>
       {/* </ImageBackground> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 36,
-    marginTop: 32,
+    marginTop: 52,
     color: "#6B3F87",
   },
   name: {

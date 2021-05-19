@@ -1,164 +1,168 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import {useState} from 'react'
-import { StyleSheet,Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { render } from "react-dom";
+import { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  ScrollView,
+  SafeAreaView
+} from "react-native";
+import axios from "axios";
 
-function SignUpScreen(props){
+function SignUpScreen(props) {
+  const [fname, setFname] = React.useState("");
+  const [lname, setLname] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   return (
- <ImageBackground style={styles.background}
-    source = {require("../assets/transparent.png")}>
-    <View style = {styles.container}>
-      <Text style ={styles.logo}>Sign Up</Text>
-      <View style = {styles.inputView}>
-        <TextInput
-          style = {styles.inputText}
-          placeholder = "Email"
-          placeholderTextColor= '#808080'
-          onChangeText = {text => this.setState({email:text})}/>
-      </View>
-      <View style = {styles.inputView}>
-        <TextInput
-          style = {styles.inputText}
-          placeholder = "Username"
-          placeholderTextColor = '#808080'
-          onChangeText = {text => this.setState({password:text})}
-        />
-        </View>
-        <View style = {styles.inputView}>
-        <TextInput
-          secureTextEntry
-          style = {styles.inputText}
-          placeholder = "Password"
-          placeholderTextColor = '#808080'
-          onChangeText = {text => this.setState({password:text})}
-        />
-        </View>
-        <View style = {styles.inputView}>
-        <TextInput
-          secureTextEntry
-          style = {styles.inputText}
-          placeholder = "Confirm Password"
-          placeholderTextColor = '#808080'
-          onChangeText = {text => this.setState({password:text})}
-        />
-        </View>
-        <TouchableOpacity style={styles.signupBtn}>
-          <Text style={styles.signText}>SIGN UP</Text>
-        </TouchableOpacity>
-          <Text style ={styles.already}>Already have an Account?</Text>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>SIGN IN</Text>
-        </TouchableOpacity>
-      <StatusBar style="auto" />
-    
-    </View>
-   </ImageBackground> 
-  
-    
+    <SafeAreaView>
+      <ScrollView>
+        <ImageBackground
+          style={styles.background}
+          source={require("../assets/transparent.png")}
+        >
+          <View style={styles.container}>
+            <Text style={styles.heading}>Sign Up</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setFname}
+              value={fname}
+              placeholder="First Name"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setLname}
+              value={lname}
+              placeholder="Last Name"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Email"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setUsername}
+              value={username}
+              placeholder="Username"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry
+              placeholder="Password"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry
+              placeholder="Confirm Password"
+            />
+            <TouchableOpacity style={styles.signInButton}>
+              <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+            <Text style={{ marginTop: 30, fontSize: 14 }}>
+              {" "}
+              Don't have an account?
+            </Text>
+            <TouchableOpacity style={styles.signUpBtn}>
+              <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG IN</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </ScrollView>
+    </SafeAreaView>
   );
-  }
-
-
+}
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-   
+    alignItems: "center",
+    justifyContent: "center",
   },
 
-  background:{
+  background: {
     width: "100%",
     height: "100%",
     flex: 1,
-    resizeMode: 'stretch', // or 'stretch',
-    justifyContent: 'center',
-
-  },
-
-  logo:{
-    fontSize: 45,
-    color: '#000000',
-    marginBottom: 40,
-    textAlign: "center"
-  },
-  inputView:{
-    width:"70%",
-    backgroundColor:"#FFFFFF",
-    borderRadius:7,
-    borderWidth: 1,
-    height:45,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
-  },
-
-  inputText:{
-    height: 50,
-    color: "black",
-    fontSize: 11
-  },
-  already:{
-    color: "black",
-    fontSize:12,
-    marginTop: 20,
-    marginBottom: -15
-  },
-
-  signupBtn:{
-    width: "50%",
-    backgroundColor: "#6b3f87",
-    borderRadius: 10,
-    height: 50,
-    alignItems:"center",
+    resizeMode: "stretch", // or 'stretch',
     justifyContent: "center",
-    marginTop: 25,
-    marginBottom: 10
-    
-
   },
 
-  signText:{
-    color:"white",
-    fontWeight: "bold",
-    fontSize: 16,
-
-  },
-
-  loginBtn:{
-    width: "50%",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    height: 50,
-    alignItems:"center",
-    justifyContent: "center",
-    marginTop: 25,
+  heading: {
+    fontSize: 36,
+    marginTop: 30,
     marginBottom: 10,
-    borderBottomWidth:2,
-    borderTopWidth:2,
-    borderLeftWidth:2,
-    borderRightWidth:2,
-    borderTopColor:"#6b3f87",
-    borderRightColor:"#6b3f87",
-    borderLeftColor: "#6b3f87",
-    borderBottomColor: "#6b3f87",
   },
-
-  loginText:{
-    color: "#6b3f87",
-    fontWeight: "bold",
-    fontSize: 16,
-    fontStyle: "normal"
-
-    
+  input: {
+    height: 45,
+    width: 300,
+    margin: 12,
+    paddingLeft: 6,
+    borderRadius: 8,
+    borderColor: "#A397AA",
+    borderWidth: 1,
   },
- /* backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover', // or 'stretch',
-    justifyContent: 'center',
-    opacity: 1
+  signInButton: {
+    alignItems: "center",
+    backgroundColor: "#6B3F87",
+    padding: 10,
+    marginTop: 24,
+    marginBottom: 0,
+    height: 48,
+    width: 280,
+    borderRadius: 8,
+    // shadowColor: "#000000",
+    // shadowOffset: { width: 0, height: 14 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 2,
+    elevation: 30,
+  },
+  signUpBtn: {
+    alignItems: "center",
+    //backgroundColor: "#ffffff",
+    padding: 10,
+    marginTop: 24,
+    marginBottom: 34,
+    height: 48,
+    width: 280,
+    borderRadius: 8,
+    borderColor: "#6B3F87",
+    borderWidth: 2,
+  },
+  bg: {
+    width: "100%",
+    height: "100%",
+    // flex: 1,
+    resizeMode: "stretch", // or 'stretch',
+    justifyContent: "center",
 
- 
-}*/});
+    // resizeMode: "cover",
+    //justifyContent: "center"
+  },
+  // bg: {
+  //   position:'absolute',
+  //   bottom:0
+  //   // flex: 1,
+  //   // justifyContent: "center"
+  // },
+  pwBtn: {
+    alignItems: "center",
+    padding: 10,
+    height: 48,
+    width: 280,
+  },
+});
 export default SignUpScreen;
