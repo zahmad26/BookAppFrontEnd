@@ -7,6 +7,8 @@ import DiscoverScreen from "../screens/DiscoverScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import AuthorScreen from "../screens/AuthorScreen";
+import HomeStack from "./HomeStack";
+import DiscoverStack from "./DiscoverStack";
 
 const Tab = createBottomTabNavigator();
 const MyTabs = () => {
@@ -21,7 +23,7 @@ const MyTabs = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
@@ -31,7 +33,7 @@ const MyTabs = () => {
       />
       <Tab.Screen
         name="Discover"
-        component={DiscoverScreen}
+        component={DiscoverStack}
         options={{
           tabBarLabel: "Discover",
           tabBarIcon: ({ color, size }) => (
@@ -48,14 +50,6 @@ const MyTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle" color={color} size={size} />
           ),
-        }}
-      />
-      <Tab.Screen
-        name="Author"
-        component={AuthorScreen}
-        options={{
-          tabBarLabel: "Author",
-          showLabel: false,
         }}
       />
     </Tab.Navigator>

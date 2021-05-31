@@ -16,6 +16,7 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 
 const HomeScreen = (props) => {
+  const { navigation } = props;
   var books = [
     {
       id: "1",
@@ -152,7 +153,9 @@ const HomeScreen = (props) => {
           renderItem={({ item }) => {
             return (
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Book Details")}
+                >
                   <Image style={styles.book} source={item.url} />
                 </TouchableOpacity>
                 <Text style={styles.bookNames}>{item.name}</Text>
@@ -224,7 +227,11 @@ const HomeScreen = (props) => {
                 marginBottom: 24,
               }}
             >
-              <Image style={styles.listedBook} source={item.url} />
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Book Details")}
+              >
+                <Image style={styles.listedBook} source={item.url} />
+              </TouchableOpacity>
               <View>
                 <Text
                   style={{

@@ -172,7 +172,9 @@ const DiscoverScreen = (props) => {
           renderItem={({ item }) => {
             return (
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Book Details")}
+                >
                   <Image style={styles.book} source={item.url} />
                 </TouchableOpacity>
                 <Text style={styles.bookNames}>{item.name}</Text>

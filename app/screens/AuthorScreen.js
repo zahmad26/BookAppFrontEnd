@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,8 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 
 const AuthorScreen = (props) => {
+  const { navigation } = props;
+  const [data, setData] = useState(books);
   let authorName = "Anne Doe";
   let authorRating = "4.3";
   let totalRatings = "500";
@@ -76,6 +78,22 @@ const AuthorScreen = (props) => {
       favourite: false,
     },
   ];
+
+  const favoriteHandler = (item) => {
+    console.log("I am pressed");
+    console.log("Item", item);
+
+    const updatedBooks = books.map((book) => {
+      if (book.id === item.id) {
+        console.log("here");
+        book.favourite = !book.favourite;
+        console.log("Updated", item);
+      }
+      return book;
+    });
+
+    setData(updatedBooks);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -155,6 +173,7 @@ const AuthorScreen = (props) => {
         {books.map((item) => {
           return (
             <View
+              key={item.id}
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -162,7 +181,11 @@ const AuthorScreen = (props) => {
                 marginTop: 20,
               }}
             >
-              <Image style={styles.listedBook} source={item.url} />
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Book Details")}
+              >
+                <Image style={styles.listedBook} source={item.url} />
+              </TouchableOpacity>
               <View>
                 <Text
                   style={{
