@@ -15,7 +15,7 @@ import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   var books = [
     {
       id: "1",

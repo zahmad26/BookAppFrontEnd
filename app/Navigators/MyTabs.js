@@ -6,14 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 import DiscoverScreen from "../screens/DiscoverScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import AuthorScreen from "../screens/AuthorScreen";
 
 const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      backBehavior="history"
       tabBarOptions={{
         activeTintColor: "#6B3F87",
+        keyboardHidesTabBar: true,
       }}
     >
       <Tab.Screen
@@ -45,6 +48,14 @@ const MyTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle" color={color} size={size} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Author"
+        component={AuthorScreen}
+        options={{
+          tabBarLabel: "Author",
+          showLabel: false,
         }}
       />
     </Tab.Navigator>

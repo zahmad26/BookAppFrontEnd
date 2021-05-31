@@ -15,7 +15,8 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import author from "../assets/author.jpeg";
 
-const DiscoverScreen = () => {
+const DiscoverScreen = (props) => {
+  const { navigation } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const discoverHeading = "What will you read\nnext?";
   const updateSearch = (searchTerm) => {
@@ -207,7 +208,7 @@ const DiscoverScreen = () => {
           renderItem={({ item }) => {
             return (
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Author")}>
                   <Image style={styles.author} source={item.url} />
                 </TouchableOpacity>
               </View>
