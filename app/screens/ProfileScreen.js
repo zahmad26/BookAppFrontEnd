@@ -10,7 +10,6 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-import OutlineInput from "react-native-outline-input";
 import axios from "axios";
 
 const ProfileScreen = (props) => {
@@ -43,51 +42,53 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView>
       {/* <ImageBackground source={BackGroundImage} style={styles.bg}> */}
-<ScrollView>
-      <ImageBackground
-        style={styles.bg}
-        source={require("../assets/transparent.png")}
-      >
-        <View style={styles.container}>
-          <Text style={styles.heading}>My Profile</Text>
-          <Image
-            style={styles.profileImg}
-            source={require("../assets/profile.png")}
-          />
-          <Text style={styles.name}>{userName}</Text>
-          
-          <TextInput
-            label="password "
-            mode="outlined"
-            style={styles.input}
-            onChangeText={setFirstName}
-            value={firstName}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setLastName}
-            value={lastName}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setUserName}
-            value={userName}
-          />
-          <TextInput style={styles.input} editable={false} value={email} />
-          <TouchableOpacity style={styles.pwBtn}>
-            <Text style={{ color: "#6B3F87", fontSize: 12, paddingBottom: 7 }}>
-              CHANGE PASSWORD
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.saveButton}>
-            <Text style={{ color: "white", fontSize: 17 }}>SAVE</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.logOutBtn}>
-            <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG OUT</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-      {/* </ImageBackground> */}
+      <ScrollView>
+        <ImageBackground
+          style={styles.bg}
+          source={require("../assets/transparent.png")}
+        >
+          <View style={styles.container}>
+            <Text style={styles.heading}>My Profile</Text>
+            <Image
+              style={styles.profileImg}
+              source={require("../assets/profile.png")}
+            />
+            <Text style={styles.name}>{userName}</Text>
+
+            <TextInput
+              label="password "
+              mode="outlined"
+              style={styles.input}
+              onChangeText={setFirstName}
+              value={firstName}
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setLastName}
+              value={lastName}
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setUserName}
+              value={userName}
+            />
+            <TextInput style={styles.input} editable={false} value={email} />
+            <TouchableOpacity style={styles.pwBtn}>
+              <Text
+                style={{ color: "#6B3F87", fontSize: 12, paddingBottom: 7 }}
+              >
+                CHANGE PASSWORD
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.saveButton}>
+              <Text style={{ color: "white", fontSize: 17 }}>SAVE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.logOutBtn}>
+              <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG OUT</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+        {/* </ImageBackground> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -101,9 +102,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   heading: {
-    fontSize: 36,
+    fontSize: 26,
     marginTop: 52,
-    color: "#6B3F87",
+    color: "#000",
+    fontFamily: "playfair-display",
   },
   name: {
     marginTop: 15,
