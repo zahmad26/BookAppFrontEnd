@@ -3,12 +3,11 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import DiscoverScreen from "../screens/DiscoverScreen";
-import HomeScreen from "../screens/HomeScreen";
+import { MaterialIcons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
-import AuthorScreen from "../screens/AuthorScreen";
 import HomeStack from "./HomeStack";
 import DiscoverStack from "./DiscoverStack";
+import ShelfStack from "./ShelfStack";
 
 const Tab = createBottomTabNavigator();
 const MyTabs = () => {
@@ -38,6 +37,17 @@ const MyTabs = () => {
           tabBarLabel: "Discover",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="compass" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Shelf"
+        component={ShelfStack}
+        options={{
+          tabBarLabel: "Shelf",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="book" color={color} size={size} />
           ),
         }}
       />

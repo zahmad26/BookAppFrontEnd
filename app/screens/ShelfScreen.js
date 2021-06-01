@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
   SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
   Image,
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { SearchBar, Tab } from "react-native-elements";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Tab } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import Swiper from "react-native-swiper";
 import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 
-const HomeScreen = (props) => {
+const ShelfScreen = (props) => {
   const { navigation } = props;
-  var books = [
+  const [data, setData] = useState(books);
+  const [selectedId, setSelectedId] = useState(null);
+  let books = [
     {
       id: "1",
       name: "Dracula",
@@ -74,24 +76,35 @@ const HomeScreen = (props) => {
       favourite: false,
     },
   ];
-  let userName = "Samima";
-  let welcomeMessage = `Good Afternoon, \n${userName}`;
-  const [searchTerm, setSearchTerm] = useState("");
-  const [data, setData] = useState(books);
-  const [selectedId, setSelectedId] = useState(null);
-  // const [isfavorite, setFavorite] = useState(false);
-
-  const updateSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);
-    //console.log(searchTerm);
-  };
-
-  // const favoriteHandler = (item, index) => {
-  //   let arr = [...data];
-  //   arr[index].favorite = item.favorite === true ? false : true;
-  //   this.setState({ dataSource: arr });
-  // };
-
+  let shelfBooks = [
+    {
+      id: "1",
+      name: "Dracula",
+      url: Dracula,
+      author: "Bram Stoker",
+      rating: "4.2",
+      totalRatings: "8,750",
+      favourite: true,
+    },
+    {
+      id: "2",
+      name: "Huck",
+      url: Huck,
+      author: "Mark Twain",
+      rating: "4.3",
+      totalRatings: "3,530",
+      favourite: false,
+    },
+    {
+      id: "3",
+      name: "Oliver Twist",
+      url: Oliver,
+      author: "Charles Dickens",
+      rating: "4.7",
+      totalRatings: "2,357",
+      favourite: true,
+    },
+  ];
   const favoriteHandler = (item) => {
     console.log("I am pressed");
     console.log("Item", item);
@@ -107,111 +120,101 @@ const HomeScreen = (props) => {
 
     setData(updatedBooks);
   };
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headingAndImgContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Profile")}
-          style={[
-            styles.explore,
-            { borderRadius: 100, marginBottom: 14, marginRight: 0 },
-          ]}
-        >
-          <Image
-            style={styles.profileImg}
-            source={require("../assets/profile-img.jpg")}
-          />
-        </TouchableOpacity>
-        <Text style={styles.heading}>{welcomeMessage}</Text>
-      </View>
-      <SearchBar
-        placeholder="Search..."
-        onChangeText={updateSearch}
-        value={searchTerm}
-        containerStyle={styles.searchContainerStyle}
-        inputContainerStyle={styles.searchInputContainerStyle}
-        lightTheme={true}
-        inputStyle={styles.searchInputStyle}
-      />
-      <View style={{ flexDirection: "row", marginTop: 24 }}>
-        <Text
-          style={{
-            fontSize: 22,
-            paddingLeft: 24,
-            fontFamily: "playfair-display",
-            marginRight: 180,
+      <View
+        style={{
+          //backgroundColor: "#86469C",
+          height: 320,
+          marginTop: 60,
+          marginRight: 24,
+          marginLeft: 24,
+        }}
+      >
+        <Text style={styles.heading}>My Shelf</Text>
+        <Swiper
+          style={styles.wrapper}
+          showsButtons={true}
+          height={250}
+          autoplay={true}
+          containerStyle={{
+            marginTop: 20,
+            //backgroundColor: "#86469C",
           }}
+          showsPagination={false}
+          nextButton={<Text style={styles.buttonText}>›</Text>}
+          prevButton={<Text style={styles.buttonText}>‹</Text>}
         >
-          My Books
-        </Text>
-        <MaterialCommunityIcons
-          name="dots-horizontal"
-          size={32}
-          color="black"
-        />
-      </View>
-
-      <View style={styles.booksContainer}>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={books}
-          keyExtractor={(i) => i.id}
-          renderItem={({ item }) => {
+          {shelfBooks.map((item) => {
             return (
-              <View>
+              <View style={styles.slide} key={item.id}>
                 <TouchableOpacity
                   style={styles.explore}
                   onPress={() => navigation.navigate("Book Details")}
                 >
                   <Image style={styles.book} source={item.url} />
                 </TouchableOpacity>
-                <Text style={styles.bookNames}>{item.name}</Text>
               </View>
             );
-          }}
-        />
+          })}
+        </Swiper>
       </View>
-
-      <View style={{ margin: 24 }}>
+      <View style={{ margin: 24, marginTop: 32 }}>
         <Tab
           indicatorStyle={{
             backgroundColor: "#EB5E0B",
-            width: 96,
+            width: 65,
             marginLeft: 7,
           }}
           variant={"default"}
         >
           <Tab.Item
-            title="Trending"
+            title="All"
             value="0"
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
               padding: 5,
+              paddingRight: 0,
+              paddingLeft: 0,
               borderTopLeftRadius: 8,
               borderBottomLeftRadius: 8,
             }}
             titleStyle={styles.tabTitle}
           />
           <Tab.Item
-            title="Popular"
+            title="Mystery"
             value="1"
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
               padding: 5,
+              paddingRight: 0,
+              paddingLeft: 0,
             }}
             titleStyle={styles.tabTitle}
           />
           <Tab.Item
-            title="Latest"
+            title="Horror"
             value="2"
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
               padding: 5,
+              paddingRight: 0,
+              paddingLeft: 0,
+            }}
+            titleStyle={styles.tabTitle}
+          />
+          <Tab.Item
+            title="Sci-fi"
+            value="2"
+            buttonStyle={{
+              backgroundColor: "#3E155A",
+              color: "#fff",
+              padding: 5,
+              paddingRight: 0,
+              paddingLeft: 0,
               borderTopRightRadius: 8,
               borderBottomRightRadius: 8,
             }}
@@ -223,7 +226,7 @@ const HomeScreen = (props) => {
       <FlatList
         style={{ marginLeft: 24, marginRight: 24 }}
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={books}
         // keyExtractor={(i) => i.id}
         extraData={selectedId}
         renderItem={({ item, index }) => {
@@ -311,70 +314,33 @@ const HomeScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
     backgroundColor: "#fff",
+    //  alignItems: "center",
+    // justifyContent: "center",
   },
-  headingAndImgContainer: {
-    // backgroundColor: "#8FBC8F",
-    flexDirection: "row",
-
-    padding: 24,
-    paddingTop: 60,
+  wrapper: {
+    //backgroundColor: "#BCE7EA",
+    height: 300,
   },
-  profileImg: {
-    width: 60,
-    height: 60,
-    borderRadius: 100,
+  slide: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  book: {
+    borderRadius: 8,
+    width: 146,
+    height: 233,
   },
   heading: {
     fontSize: 26,
     fontFamily: "playfair-display",
-    marginLeft: 24,
-  },
-  booksContainer: {
-    paddingTop: 20,
-    paddingRight: 24,
-    paddingRight: 0,
-    paddingLeft: 24,
-    justifyContent: "space-around",
-    // backgroundColor: "#A0A0A0",
-    flexDirection: "row",
-  },
-  book: {
-    borderRadius: 8,
-    width: 89,
-    height: 140,
-  },
-  listedBook: {
-    borderRadius: 8,
-    width: 75,
-    height: 113,
-  },
-  bookNames: {
-    fontFamily: "open-sans",
-  },
-  searchContainerStyle: {
-    backgroundColor: "#fff",
-    padding: 5,
-    marginRight: 24,
-    marginLeft: 24,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-  },
-  searchInputContainerStyle: {
-    backgroundColor: "#F8F8F8",
-  },
-  searchInputStyle: {
-    fontFamily: "open-sans",
-    fontSize: 16,
-  },
-
-  tabTitle: {
-    color: "#fff",
-    fontFamily: "open-sans",
-    fontSize: 14,
-    textTransform: "capitalize",
+    textAlign: "center",
   },
   explore: {
     backgroundColor: "#fff",
@@ -384,8 +350,22 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowRadius: 24,
     elevation: 8,
-    marginRight: 24,
+  },
+  tabTitle: {
+    color: "#fff",
+    fontFamily: "open-sans",
+    fontSize: 11,
+    textTransform: "capitalize",
+  },
+  listedBook: {
+    borderRadius: 8,
+    width: 75,
+    height: 113,
+  },
+  buttonText: {
+    color: "#6B3F87",
+    fontSize: 60,
   },
 });
 
-export default HomeScreen;
+export default ShelfScreen;

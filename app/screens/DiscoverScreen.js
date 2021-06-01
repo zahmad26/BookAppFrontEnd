@@ -101,10 +101,18 @@ const DiscoverScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingAndImgContainer}>
-        <Image
-          style={styles.profileImg}
-          source={require("../assets/profile-img.jpg")}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profile")}
+          style={[
+            styles.explore,
+            { borderRadius: 100, marginBottom: 14, marginRight: 0 },
+          ]}
+        >
+          <Image
+            style={styles.profileImg}
+            source={require("../assets/profile-img.jpg")}
+          />
+        </TouchableOpacity>
         <Text style={styles.heading}>{discoverHeading}</Text>
       </View>
       <SearchBar
@@ -173,6 +181,7 @@ const DiscoverScreen = (props) => {
             return (
               <View>
                 <TouchableOpacity
+                  style={styles.explore}
                   onPress={() => navigation.navigate("Book Details")}
                 >
                   <Image style={styles.book} source={item.url} />
@@ -210,7 +219,13 @@ const DiscoverScreen = (props) => {
           renderItem={({ item }) => {
             return (
               <View>
-                <TouchableOpacity onPress={() => navigation.navigate("Author")}>
+                <TouchableOpacity
+                  style={[
+                    styles.explore,
+                    { borderRadius: 100, marginRight: 40, marginBottom: 30 },
+                  ]}
+                  onPress={() => navigation.navigate("Author")}
+                >
                   <Image style={styles.author} source={item.url} />
                 </TouchableOpacity>
               </View>
@@ -265,13 +280,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 105,
     height: 168,
-    marginRight: 24,
   },
   author: {
     borderRadius: 100,
     width: 78,
     height: 78,
-    marginRight: 40,
   },
   listedBook: {
     borderRadius: 8,
@@ -302,6 +315,16 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 14,
     textTransform: "capitalize",
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
   },
 });
 

@@ -182,6 +182,7 @@ const AuthorScreen = (props) => {
               }}
             >
               <TouchableOpacity
+                style={[styles.explore, { marginRight: 0, marginLeft: 10 }]}
                 onPress={() => navigation.navigate("Book Details")}
               >
                 <Image style={styles.listedBook} source={item.url} />
@@ -289,6 +290,16 @@ const styles = StyleSheet.create({
     // flex: 1,
     resizeMode: "stretch", // or 'stretch',
     justifyContent: "center",
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
   },
 });
 
