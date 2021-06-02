@@ -24,14 +24,24 @@ const LoginScreen = (props) => {
   const login = () => {
     console.log("in Login", user);
     axios
-    .post("http://localhost:5000/api/users/login", user)
+      .post("http://192.168.18.209:5000/api/users/login", user)
       .then((res) => {
-        console.log("after api call", res);
-        setLoggedIn(true);
+        if (res.data.header.error != 1) {
+          setLoggedIn(true);
+          console.log(res.data.header.message, res);
+          props.navigation.navigate("Tabs", {
+            token: res.data.body.token,
+            userId: res.data.body.id,
+          });
+        } else {
+          errMessage = res.data.header.message;
+          setLoggedIn(false);
+          console.log(res.data.header.message);
+        }
       })
-      .catch((error) => {
-        console.log(errMessage);
+      .catch((err) => {
         setLoggedIn(false);
+        console.log("Login failed", err);
       });
   };
 
@@ -48,6 +58,7 @@ const LoginScreen = (props) => {
             onChangeText={setEmail}
             value={email}
             placeholder="Email"
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
@@ -55,13 +66,13 @@ const LoginScreen = (props) => {
             value={password}
             secureTextEntry
             placeholder="Password"
+            autoCapitalize="none"
           />
-          <Text style={{ color: "red", fontSize: 17, paddingTop: 2 }}>
+          <Text style={{ color: "red", fontSize: 12, paddingTop: 2 }}>
             {loggedIn ? "" : errMessage}
           </Text>
 
-          <TouchableOpacity onPress={() => {
-            props.navigation.navigate("Tabs") }} style={styles.signInButton} onPress={login}>
+          <TouchableOpacity style={styles.signInButton} onPress={login}>
             <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
               LOG IN
             </Text>
@@ -70,8 +81,12 @@ const LoginScreen = (props) => {
             {" "}
             Don't have an account?
           </Text>
-          <TouchableOpacity onPress={() => {
-            props.navigation.navigate("Signup") }} style={styles.signUpBtn}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("Signup");
+            }}
+            style={styles.signUpBtn}
+          >
             <Text style={{ color: "#6B3F87", fontSize: 17 }}>SIGN UP</Text>
           </TouchableOpacity>
         </View>
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginTop: 30,
     marginBottom: 10,
-    fontFamily:'playfair-display'
+    fontFamily: "playfair-display",
   },
 
   input: {

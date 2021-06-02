@@ -182,9 +182,10 @@ const HomeScreen = (props) => {
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
-              padding: 5,
+              padding: 3,
               borderTopLeftRadius: 8,
               borderBottomLeftRadius: 8,
+              fontSize:1
             }}
             titleStyle={styles.tabTitle}
           />
@@ -194,7 +195,8 @@ const HomeScreen = (props) => {
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
-              padding: 5,
+              padding: 3,
+              fontSize:5
             }}
             titleStyle={styles.tabTitle}
           />
@@ -204,9 +206,10 @@ const HomeScreen = (props) => {
             buttonStyle={{
               backgroundColor: "#3E155A",
               color: "#fff",
-              padding: 5,
+              padding: 3,
               borderTopRightRadius: 8,
               borderBottomRightRadius: 8,
+              fontSize:5
             }}
             titleStyle={styles.tabTitle}
           />

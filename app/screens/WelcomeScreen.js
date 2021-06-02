@@ -8,12 +8,12 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from "react-native";
 
 const WelcomeScreen = (props) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <ImageBackground
           style={styles.background}
@@ -30,29 +30,32 @@ const WelcomeScreen = (props) => {
             <Text style={styles.tagline}>Sleep is good. Books are better.</Text>
           </View>
           <View>
-            <TouchableOpacity onPress={() => {
-              props.navigation.navigate("Signup")
-            }}
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate("Signup");
+              }}
             >
               <Text style={styles.signup}>SIGN UP</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity  onPress={() => {
-              props.navigation.navigate("Login")
-            }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("Login");
+            }}
+          >
             <Text style={styles.signin}>LOG IN</Text>
           </TouchableOpacity>
-
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   background: {
     width: "100%",
     height: "100%",
+    flex: 1,
   },
   logo: {
     width: 220,
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontFamily: "playfair-display",
     marginTop: "5%",
-    textAlign:'center'
+    textAlign: "center",
   },
 });
 
