@@ -45,6 +45,43 @@ const LoginScreen = (props) => {
       });
   };
 
+  function SubmitButton() {
+    if (email && password) {
+      return (
+        <TouchableOpacity style={styles.signInButton} onPress={login}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              paddingTop: 2,
+              fontFamily: "open-sans",
+            }}
+          >
+            LOG IN
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          disabled
+          style={[styles.signInButton, { backgroundColor: "#816687" }]}
+          onPress={login}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              paddingTop: 2,
+              fontFamily: "open-sans",
+            }}
+          >
+            LOG IN
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
   return (
     <SafeAreaView>
       <ImageBackground
@@ -72,12 +109,10 @@ const LoginScreen = (props) => {
             {loggedIn ? "" : errMessage}
           </Text>
 
-          <TouchableOpacity style={styles.signInButton} onPress={login}>
-            <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
-              LOG IN
-            </Text>
-          </TouchableOpacity>
-          <Text style={{ marginTop: 30, fontSize: 14 }}>
+          <SubmitButton />
+          <Text
+            style={{ marginTop: 30, fontSize: 14, fontFamily: "open-sans" }}
+          >
             {" "}
             Don't have an account?
           </Text>
@@ -87,7 +122,15 @@ const LoginScreen = (props) => {
             }}
             style={styles.signUpBtn}
           >
-            <Text style={{ color: "#6B3F87", fontSize: 17 }}>SIGN UP</Text>
+            <Text
+              style={{
+                color: "#6B3F87",
+                fontSize: 17,
+                fontFamily: "open-sans",
+              }}
+            >
+              SIGN UP
+            </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -117,6 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#A397AA",
     borderWidth: 1,
+    fontFamily: "open-sans",
   },
   signInButton: {
     alignItems: "center",
