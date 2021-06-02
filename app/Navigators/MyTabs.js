@@ -2,31 +2,24 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import DiscoverScreen from "../screens/DiscoverScreen";
-import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import AuthorScreen from "../screens/AuthorScreen";
 import HomeStack from "./HomeStack";
 import DiscoverStack from "./DiscoverStack";
 import SearchScreen from "./SearchStack";
-
-
-
-
+import ShelfStack from "./ShelfStack";
 
 const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   return (
     <Tab.Navigator
-      // initialRouteName={"Home"}
-      // backBehavior="history"
-      // tabBarOptions={{
-      //   activeTintColor: "#6B3F87",
-      //   keyboardHidesTabBar: true,
-        
-        
-      // }}
+      initialRouteName={"Home"}
+      backBehavior="history"
+      tabBarOptions={{
+        activeTintColor: "#6B3F87",
+        keyboardHidesTabBar: true,
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -48,7 +41,17 @@ const MyTabs = () => {
           ),
         }}
       />
-  <Tab.Screen
+      <Tab.Screen
+        name="Shelf"
+        component={ShelfStack}
+        options={{
+          tabBarLabel: "Shelf",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="book" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Search"
         component={SearchScreen}
         options={{
@@ -68,7 +71,6 @@ const MyTabs = () => {
           ),
         }}
       />
-    
     </Tab.Navigator>
   );
 };
