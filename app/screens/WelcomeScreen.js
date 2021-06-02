@@ -12,8 +12,9 @@ import {
 } from "react-native";
 
 const WelcomeScreen = (props) => {
+  let tagline = "Sleep is good.\nBooks are better.";
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#473C8B" }}>
       <ScrollView>
         <ImageBackground
           style={styles.background}
@@ -27,7 +28,7 @@ const WelcomeScreen = (props) => {
             ></Image>
           </View>
           <View>
-            <Text style={styles.tagline}>Sleep is good. Books are better.</Text>
+            <Text style={styles.tagline}>{tagline}</Text>
           </View>
           <View>
             <TouchableOpacity
@@ -56,12 +57,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 1,
+    marginTop: 0,
   },
   logo: {
     width: 220,
     height: 70,
     marginLeft: "19%",
-    marginTop: "25%",
+    marginTop: "20%",
   },
   signup: {
     backgroundColor: "#eb5e0b",
@@ -93,9 +95,9 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
   },
   tagline: {
-    fontSize: 19,
+    fontSize: 30,
     fontFamily: "playfair-display",
-    marginTop: "5%",
+    marginTop: "15%",
     textAlign: "center",
   },
 });

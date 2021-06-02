@@ -50,6 +50,38 @@ function SignUpScreen(props) {
         console.log(res.data.header.message, err);
       });
   };
+  const [confirmPw, setConfirmPw] = React.useState("");
+
+  function SubmitButton() {
+    if (fname && lname && email && username && password && confirmPw) {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Tabs");
+          }}
+          style={styles.signInButton}
+        >
+          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+            SIGN UP
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          disabled
+          onPress={() => {
+            props.navigation.navigate("Tabs");
+          }}
+          style={[styles.signInButton, { backgroundColor: "#816687" }]}
+        >
+          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+            SIGN UP
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -95,8 +127,8 @@ function SignUpScreen(props) {
             />
             <TextInput
               style={styles.input}
-              onChangeText={setPassword}
-              value={password}
+              onChangeText={setConfirmPw}
+              value={confirmPw}
               secureTextEntry
               placeholder="Confirm Password"
             />
@@ -111,6 +143,7 @@ function SignUpScreen(props) {
                 SIGN UP
               </Text>
             </TouchableOpacity>
+            <SubmitButton />
             <Text style={{ marginTop: 30, fontSize: 14 }}>
               {" "}
               Have an account?
