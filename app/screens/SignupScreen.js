@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import axios from "axios";
 
@@ -20,6 +20,38 @@ function SignUpScreen(props) {
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPw, setConfirmPw] = React.useState("");
+
+  function SubmitButton() {
+    if (fname && lname && email && username && password && confirmPw) {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Tabs");
+          }}
+          style={styles.signInButton}
+        >
+          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+            SIGN UP
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          disabled
+          onPress={() => {
+            props.navigation.navigate("Tabs");
+          }}
+          style={[styles.signInButton, { backgroundColor: "#816687" }]}
+        >
+          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+            SIGN UP
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -63,23 +95,22 @@ function SignUpScreen(props) {
             />
             <TextInput
               style={styles.input}
-              onChangeText={setPassword}
-              value={password}
+              onChangeText={setConfirmPw}
+              value={confirmPw}
               secureTextEntry
               placeholder="Confirm Password"
             />
-            <TouchableOpacity  onPress={() => {
-            props.navigation.navigate("Tabs") }}style={styles.signInButton}>
-              <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity>
+            <SubmitButton />
             <Text style={{ marginTop: 30, fontSize: 14 }}>
               {" "}
               Don't have an account?
             </Text>
-            <TouchableOpacity  onPress={() => {
-            props.navigation.navigate("Login")}} style={styles.signUpBtn}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate("Login");
+              }}
+              style={styles.signUpBtn}
+            >
               <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG IN</Text>
             </TouchableOpacity>
           </View>
@@ -107,8 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginTop: 30,
     marginBottom: 10,
-    fontFamily:'playfair-display',
-
+    fontFamily: "playfair-display",
   },
   input: {
     height: 45,
@@ -128,7 +158,7 @@ const styles = StyleSheet.create({
     height: 48,
     width: 280,
     borderRadius: 8,
-    fontFamily:'open-sans',
+    fontFamily: "open-sans",
     // shadowColor: "#000000",
     // shadowOffset: { width: 0, height: 14 },
     // shadowOpacity: 0.2,
@@ -146,8 +176,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#6B3F87",
     borderWidth: 2,
-    fontFamily:'open-sans',
-
+    fontFamily: "open-sans",
   },
   bg: {
     width: "100%",
