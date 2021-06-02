@@ -9,17 +9,24 @@ import ProfileScreen from "../screens/ProfileScreen";
 import AuthorScreen from "../screens/AuthorScreen";
 import HomeStack from "./HomeStack";
 import DiscoverStack from "./DiscoverStack";
+import SearchScreen from "./SearchStack";
+
+
+
+
 
 const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
-      backBehavior="history"
-      tabBarOptions={{
-        activeTintColor: "#6B3F87",
-        keyboardHidesTabBar: true,
-      }}
+      // initialRouteName={"Home"}
+      // backBehavior="history"
+      // tabBarOptions={{
+      //   activeTintColor: "#6B3F87",
+      //   keyboardHidesTabBar: true,
+        
+        
+      // }}
     >
       <Tab.Screen
         name="Home"
@@ -41,7 +48,16 @@ const MyTabs = () => {
           ),
         }}
       />
-
+  <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: "Search",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" color={color} size={size} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -52,6 +68,7 @@ const MyTabs = () => {
           ),
         }}
       />
+    
     </Tab.Navigator>
   );
 };

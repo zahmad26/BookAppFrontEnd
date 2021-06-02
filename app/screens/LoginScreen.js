@@ -60,7 +60,8 @@ const LoginScreen = (props) => {
             {loggedIn ? "" : errMessage}
           </Text>
 
-          <TouchableOpacity style={styles.signInButton} onPress={login}>
+          <TouchableOpacity onPress={() => {
+            props.navigation.navigate("Tabs") }} style={styles.signInButton} onPress={login}>
             <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
               LOG IN
             </Text>
@@ -69,7 +70,8 @@ const LoginScreen = (props) => {
             {" "}
             Don't have an account?
           </Text>
-          <TouchableOpacity style={styles.signUpBtn}>
+          <TouchableOpacity onPress={() => {
+            props.navigation.navigate("Signup") }} style={styles.signUpBtn}>
             <Text style={{ color: "#6B3F87", fontSize: 17 }}>SIGN UP</Text>
           </TouchableOpacity>
         </View>
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginTop: 30,
     marginBottom: 10,
+    fontFamily:'playfair-display'
   },
 
   input: {

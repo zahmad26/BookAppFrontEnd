@@ -15,7 +15,7 @@ import {
 import StarRating from 'react-native-star-rating';
 
 const BookDetailsScreen = () => {
-  let starCount = 3.5;
+    let starCount = 3.5;
 
 
     function onStarRatingPress(rating) {
@@ -27,36 +27,43 @@ const BookDetailsScreen = () => {
         <SafeAreaView style={styles.sf}>
 
             <ScrollView>
-                <View style={styles.container}>
-                    <Image
-                        style={styles.bookImg}
-                        source={require("../assets/jane.jpg")}
-                    />
+                <View style={{
+                    backgroundColor: "#3E155A",
+                    borderBottomLeftRadius: 45,
+                    borderBottomRightRadius: 45,
+                }}>
+                    <View style={{ marginTop: 56, alignItems: "center" }}>
+
+                        <Image
+                            style={styles.bookImg}
+                            source={require("../assets/jane.jpg")}
+                        />
+                    </View>
                     <Text style={styles.name}>Jane Eyre</Text>
                     <Text style={styles.secname}>Charlotte Bronte</Text>
 
                     <View style={{ flexDirection: 'row', marginTop: 20 }} >
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlign: 'left', color: 'white', fontSize: 15 }}>         4.3 </Text>
+                            <Text style={{ textAlign: 'left', color: 'white', fontSize: 15, fontFamily:'open-sans' }}>         4.3 </Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlign: 'center', color: 'white', fontSize: 15 }}>2,500</Text>
+                            <Text style={{ textAlign: 'center', color: 'white', fontSize: 15, fontFamily:'open-sans' }}>2,500</Text>
                         </View>
                         <View style={{ flex: 1 }}>
 
-                            <Text style={{ textAlign: 'right', color: 'white', fontSize: 15 }}>2000       .</Text>
+                            <Text style={{ textAlign: 'right', color: 'white', fontSize: 15, fontFamily:'open-sans' }}>2000       .</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 20 }} >
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlign: 'left', color: '#A397AA', fontSize: 15 }}>      Rating </Text>
+                            <Text style={{ textAlign: 'left', color: '#A397AA', fontSize: 15, fontFamily:'open-sans' }}>      Rating </Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlign: 'center', color: '#A397AA', fontSize: 15 }}>Reviews</Text>
+                            <Text style={{ textAlign: 'center', color: '#A397AA', fontSize: 15, fontFamily:'open-sans' }}>Reviews</Text>
                         </View>
                         <View style={{ flex: 1 }}>
 
-                            <Text style={{ textAlign: 'right', color: '#A397AA', fontSize: 15 }}>Pages      .</Text>
+                            <Text style={{ textAlign: 'right', color: '#A397AA', fontSize: 15, fontFamily:'open-sans' }}>Pages      .</Text>
                         </View>
                     </View>
                 </View>
@@ -64,25 +71,33 @@ const BookDetailsScreen = () => {
                     <View style={styles.progressBar}>
                         <View style={[StyleSheet.absoluteFill, { backgroundColor: "#eb5e0b" }]} />
                     </View>
-                    <Text style={{ paddingBottom: 20 }}> 100% complete </Text>
+                    <Text style={{ paddingBottom: 20, fontFamily:'open-sans' }}> 100% complete </Text>
                     <TouchableOpacity style={styles.continutebtn}>
-                        <Text style={{ color: "white", fontSize: 19, fontWeight: 'bold' }}>CONTINUE READING</Text>
+                        <Text style={{ color: "white", fontSize: 19,fontFamily:'open-sans' }}>CONTINUE READING</Text>
                     </TouchableOpacity>
-                    <Text style={{ color: "black", fontSize: 17, paddingTop: 20, paddingBottom: 15 }}>Rate It</Text>
+                    <Text style={{ color: "black", fontSize: 17, paddingTop: 20, paddingBottom: 15, fontFamily:'open-sans' }}>Rate It</Text>
                     <StarRating
                         disabled={false}
                         maxStars={5}
+                        starSize={25}
                         rating={4}
                         fullStarColor={'#eb5e0b'}
                         selectedStar={(rating) => onStarRatingPress(rating)}
                     />
 
-                    <Text style={{ paddingTop: 10, color: '#6B3F87', fontSize: 17, paddingBottom: 10 }}>Description</Text>
-                    <Text style={{ paddingRight: 15, paddingLeft: 15, justifyContent: 'center' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <Text style={{
+                        textAlign: "center",
+                        marginTop: 30,
+                        fontSize: 16,
+                        fontFamily: "open-sans",
+                        color: "#6B3F87",
+                        paddingBottom:8
+                    }}>Description</Text>
+                    <Text style={{ paddingRight: 15, paddingLeft: 15, justifyContent: 'center', fontFamily:'open-sans' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Etiam venenatis vulputate libero, id vestibulum ante convallis id.
                           </Text>
 
-                    <Text style={{ paddingTop: 10, color: 'black', fontSize: 17, paddingBottom: 10 }}>Reviews</Text>
+                    <Text style={{ paddingTop: 15, color: 'black', fontSize: 17, paddingBottom: 10, fontFamily:'open-sans' }}>Reviews</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 20 }} >
                         <View style={{ flex: 1, paddingLeft: 20 }}>
                             <Image
@@ -128,10 +143,11 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        marginTop: 15,
-        fontSize: 30,
-        color: "white",
-
+        marginTop: 24,
+        fontSize: 20,
+        textAlign: "center",
+        color: "#fff",
+        fontFamily: "open-sans",
     },
     continutebtn: {
         paddingTop: 15,
@@ -146,19 +162,21 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 40,
+        fontFamily: 'open-sans'
     },
 
     secname: {
         marginTop: 15,
-        fontSize: 25,
-        color: "white"
+        fontSize: 15,
+        textAlign: "center",
+        color: "#fff",
+        fontFamily: "open-sans",
     },
     bookImg: {
-        marginTop: 14,
-        width: 150,
-        height: 250,
-        // borderRadius: 180,
-    },
+        width: 152,
+        height: 210,
+       // borderRadius: 180,
+      },
     bg: {
         width: "100%",
         height: "100%",
@@ -177,15 +195,17 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         borderRadius: 8,
         borderColor: "#A397AA",
-        borderWidth: 1,
+        borderWidth: 1, 
+        fontFamily:'open-sans'
     },
-    inp:{
+    inp: {
         height: 80,
         width: 220,
         margin: 12,
         paddingLeft: 6,
         marginBottom: 5,
- 
+        fontFamily:'open-sans'
+
     },
     c: {
         flex: 1,

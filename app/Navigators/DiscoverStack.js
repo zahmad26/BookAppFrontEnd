@@ -16,8 +16,8 @@ const DiscoverStack = () => {
         component={DiscoverScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Author" component={AuthorScreen} />
-      <Stack.Screen name="Book Details" component={BookDetailsScreen} />
+      <Stack.Screen name="Author" component={AuthorScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="Book Details" component={BookDetailsScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

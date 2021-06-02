@@ -14,6 +14,7 @@ import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import author from "../assets/author.jpeg";
+import { ScrollView } from "react-native-gesture-handler";
 
 const DiscoverScreen = (props) => {
   const { navigation } = props;
@@ -100,6 +101,7 @@ const DiscoverScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView style = {styles.container}>
       <View style={styles.headingAndImgContainer}>
         <Image
           style={styles.profileImg}
@@ -218,6 +220,7 @@ const DiscoverScreen = (props) => {
           }}
         />
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

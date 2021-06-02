@@ -1,34 +1,51 @@
 import React from "react";
+import axios from "axios";
 import {
   Image,
   ImageBackground,
   StyleSheet,
   Text,
+  SafeAreaView,
   View,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 
-function WelcomeScreen(props) {
+const WelcomeScreen = (props) => {
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/background.png")}
-    >
-      <View>
-        <Image
-          source={require("../assets/logo-whitebg.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        ></Image>
-        <Text style={styles.tagline}>Sleep is good. Books are better.</Text>
-        <TouchableOpacity>
-          <Text style={styles.signup}>SIGN UP</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-            <Text style={styles.signin}>SIGN IN</Text>
+    <SafeAreaView>
+      <ScrollView>
+        <ImageBackground
+          style={styles.background}
+          source={require("../assets/background.png")}
+        >
+          <View>
+            <Image
+              source={require("../assets/logo-whitebg.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            ></Image>
+          </View>
+          <View>
+            <Text style={styles.tagline}>Sleep is good. Books are better.</Text>
+          </View>
+          <View>
+            <TouchableOpacity onPress={() => {
+              props.navigation.navigate("Signup")
+            }}
+            >
+              <Text style={styles.signup}>SIGN UP</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity  onPress={() => {
+              props.navigation.navigate("Login")
+            }}>
+            <Text style={styles.signin}>LOG IN</Text>
           </TouchableOpacity>
-      </View>
-    </ImageBackground>
+
+        </ImageBackground>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -51,11 +68,11 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 10,
     textAlign: "center",
-    marginTop: "88%",
+    marginTop: "78%",
     marginLeft: "11%",
     padding: "2%",
     fontSize: 25,
-    fontFamily: "normal",
+    fontFamily: "open-sans",
   },
   signin: {
     backgroundColor: "transparent",
@@ -66,16 +83,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: "center",
     marginTop: "8%",
+    marginBottom: "20%",
     marginLeft: "11%",
     padding: "2%",
     fontSize: 25,
-    fontFamily: "normal",
+    fontFamily: "open-sans",
   },
   tagline: {
     fontSize: 19,
-    fontFamily: "Roboto",
-    marginTop: "20%",
-    marginLeft: "10%",
+    fontFamily: "playfair-display",
+    marginTop: "5%",
+    textAlign:'center'
   },
 });
 
