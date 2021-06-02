@@ -16,7 +16,11 @@ const SearchStack = () => {
         component={SearchScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="List Screen" component={ListScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="List Screen"
+        component={ListScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
