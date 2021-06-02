@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
+import { ScrollView } from "react-native-gesture-handler";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
@@ -110,6 +111,7 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView style = {styles.container}>
       <View style={styles.headingAndImgContainer}>
         <Image
           style={styles.profileImg}
@@ -294,6 +296,7 @@ const HomeScreen = (props) => {
         }}
         keyExtractor={(item, index) => index.toString()}
       />
+      </ScrollView>
     </SafeAreaView>
   );
 };

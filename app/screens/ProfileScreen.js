@@ -83,7 +83,8 @@ const ProfileScreen = (props) => {
             <TouchableOpacity style={styles.saveButton}>
               <Text style={{ color: "white", fontSize: 17 }}>SAVE</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.logOutBtn}>
+            <TouchableOpacity  onPress={() => {
+            props.navigation.navigate("Splash") }} style={styles.logOutBtn}>
               <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG OUT</Text>
             </TouchableOpacity>
           </View>
