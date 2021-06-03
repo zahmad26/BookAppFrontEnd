@@ -34,7 +34,7 @@ function SignUpScreen(props) {
   const signup = () => {
     console.log("in SignUp", user);
     axios
-      .post("http://192.168.18.209:5000/api/users/register", user)
+      .post("http://192.168.10.4:5000/api/users/register", user)
       .then((res) => {
         if (res.data.header.error != 1) {
           setSignUp(true);
