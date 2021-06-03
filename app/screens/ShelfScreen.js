@@ -8,12 +8,8 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { Tab } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import Swiper from "react-native-swiper";
-import Dracula from "../assets/dracula.png";
-import Huck from "../assets/huck.png";
-import Oliver from "../assets/oliver-t.png";
 import axios from "axios";
 import ip from "../config";
 
@@ -69,7 +65,7 @@ const ShelfScreen = (props) => {
           marginTop: 60,
           marginRight: 24,
           marginLeft: 24,
-          marginBottom:30
+          marginBottom: 30,
         }}
       >
         <Text style={styles.heading}>My Shelf</Text>
@@ -92,7 +88,10 @@ const ShelfScreen = (props) => {
                 <TouchableOpacity
                   style={styles.explore}
                   onPress={() =>
-                    navigation.navigate("Book Details", { id: item.bookID, token: token })
+                    navigation.navigate("Book Details", {
+                      id: item.bookID,
+                      token: token,
+                    })
                   }
                 >
                   <Image style={styles.book} source={{ uri: item.url }} />
@@ -186,9 +185,16 @@ const ShelfScreen = (props) => {
                 style={[styles.explore, { marginRight: 0, marginLeft: 10 }]}
                 onPress={() => navigation.navigate("Book Details")}
               >
-                <Image style={styles.listedBook} source={{uri: item.url}} />
+                <Image style={styles.listedBook} source={{ uri: item.url }} />
               </TouchableOpacity>
-              <View>
+              <View
+                style={{
+                  flexGrow: 1,
+                  flex: 1,
+                  marginLeft: 20,
+                  marginRight: 20,
+                }}
+              >
                 <Text
                   style={{
                     fontFamily: "open-sans",
@@ -264,7 +270,7 @@ const styles = StyleSheet.create({
   wrapper: {
     //backgroundColor: "#BCE7EA",
     height: 300,
-    paddingBottom:20
+    paddingBottom: 20,
   },
   slide: {
     flex: 1,

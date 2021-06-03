@@ -19,6 +19,7 @@ const AuthorScreen = (props) => {
   const { navigation } = props;
   const [data, setData] = useState(books);
   //console.log("ID", props.route.params);
+  const token = props.route.params.token;
   const [author, setAuthor] = useState([]);
   const [aBooks, setBooks] = useState([]);
   let authorName = "Anne Doe";
@@ -28,7 +29,7 @@ const AuthorScreen = (props) => {
   useEffect(() => {
     getAuthor();
   }, []);
-  
+
   const getAuthor = async () => {
     await axios
       .get(`http://${ip}:5000/api/authors/${props.route.params.id}`, {
@@ -57,7 +58,7 @@ const AuthorScreen = (props) => {
           //console.log("books", res.data.books);
           setBooks(
             res.data.books.filter((book) => {
-              if (book.authorID == author._id) return book;
+              if (book.authorID === author._id) return book;
             })
           );
           //console.log("author books",aBooks)
@@ -163,15 +164,17 @@ const AuthorScreen = (props) => {
           >
             <View>
               <Text style={styles.details}>{author.rating}</Text>
-              <Text style={styles.details}>Rating</Text>
+              <Text style={[styles.details, styles.detailsBottom]}>Rating</Text>
             </View>
             <View>
               <Text style={styles.details}>{totalRatings}</Text>
-              <Text style={styles.details}>Total Ratings</Text>
+              <Text style={[styles.details, styles.detailsBottom]}>
+                Total Ratings
+              </Text>
             </View>
             <View>
               <Text style={styles.details}>{numOfBooks}</Text>
-              <Text style={styles.details}>Books</Text>
+              <Text style={[styles.details, styles.detailsBottom]}>Books</Text>
             </View>
           </View>
         </View>
@@ -209,85 +212,96 @@ const AuthorScreen = (props) => {
             Books by this Author
           </Text>
         </View>
-        {aBooks.length > 0 && aBooks.map((item) => {
-          return (
-            <View
-              key={item.bookID}
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                margin: 24,
-                marginTop: 20,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Book Details",{
-                  id:item.bookID,
-                  token:token
-                })}
+        {aBooks.length > 0 &&
+          aBooks.map((item) => {
+            return (
+              <View
+                key={item.bookID}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  margin: 24,
+                  marginTop: 20,
+                }}
               >
-                <Image style={styles.listedBook} source={{uri:item.url}} />
-              </TouchableOpacity>
-              <View>
-                <Text
+                <TouchableOpacity
+                  style={[styles.explore, { marginRight: 0 }]}
+                  onPress={() =>
+                    navigation.navigate("Book Details", {
+                      id: item.bookID,
+                      token: token,
+                    })
+                  }
+                >
+                  <Image style={styles.listedBook} source={{ uri: item.url }} />
+                </TouchableOpacity>
+                <View
                   style={{
-                    fontFamily: "open-sans",
-                    fontSize: 12,
-                    paddingTop: 10,
+                    flexGrow: 1,
+                    flex: 1,
+                    marginLeft: 20,
+                    marginRight: 20,
                   }}
                 >
-                  {item.title}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "open-sans",
-                    fontSize: 12,
-                    color: "#9E9E9E",
-                    paddingTop: 2,
-                  }}
-                >
-                  {item.author}
-                </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Ionicons
-                    name="star-sharp"
-                    size={14}
-                    color="#EB5E0B"
-                    style={{ paddingTop: 6 }}
-                  />
                   <Text
                     style={{
                       fontFamily: "open-sans",
-                      fontSize: 10,
-                      paddingLeft: 5,
-                      paddingTop: 8,
+                      fontSize: 12,
+                      paddingTop: 10,
                     }}
                   >
-                    {item.rating}
+                    {item.title}
                   </Text>
                   <Text
                     style={{
                       fontFamily: "open-sans",
-                      fontSize: 10,
-                      paddingLeft: 25,
-                      paddingTop: 8,
+                      fontSize: 12,
+                      color: "#9E9E9E",
+                      paddingTop: 2,
                     }}
                   >
-                    10 ratings
+                    {item.author}
                   </Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Ionicons
+                      name="star-sharp"
+                      size={14}
+                      color="#EB5E0B"
+                      style={{ paddingTop: 6 }}
+                    />
+                    <Text
+                      style={{
+                        fontFamily: "open-sans",
+                        fontSize: 10,
+                        paddingLeft: 5,
+                        paddingTop: 8,
+                      }}
+                    >
+                      {item.rating}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "open-sans",
+                        fontSize: 10,
+                        paddingLeft: 25,
+                        paddingTop: 8,
+                      }}
+                    >
+                      10 ratings
+                    </Text>
+                  </View>
                 </View>
+                <Ionicons
+                  name={item.favourite ? "heart" : "heart-outline"}
+                  size={35}
+                  color="#3E155A"
+                  style={{ marginTop: 8 }}
+                  // onPress={() => setSelectedId(item, index)}
+                  onPress={() => favoriteHandler(item)}
+                />
               </View>
-              <Ionicons
-                name={item.favourite ? "heart" : "heart-outline"}
-                size={35}
-                color="#3E155A"
-                style={{ marginTop: 8 }}
-                // onPress={() => setSelectedId(item, index)}
-                onPress={() => favoriteHandler(item)}
-              />
-            </View>
-          );
-        })}
+            );
+          })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -331,6 +345,19 @@ const styles = StyleSheet.create({
     // flex: 1,
     resizeMode: "stretch", // or 'stretch',
     justifyContent: "center",
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
+  },
+  detailsBottom: {
+    color: "#A397AA",
   },
 });
 

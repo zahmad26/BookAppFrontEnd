@@ -68,7 +68,7 @@ const HomeScreen = (props) => {
         //console.log("trending",res.data.trending);
         if (res.data) {
           setTrending(res.data.trending);
-          setData(res.data.trending)
+          setData(res.data.trending);
         } else {
           console.log("Could not get data");
         }
@@ -99,18 +99,14 @@ const HomeScreen = (props) => {
   // };
 
   const favoriteHandler = (item) => {
-    console.log("item pressed",item)
+    console.log("item pressed", item);
     item.isFavourite
       ? axios
-          .put(
-            `http://${ip}:5000/api/books/favourites/remove`,
-            item.bookID,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
+          .put(`http://${ip}:5000/api/books/favourites/remove`, item.bookID, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
           .then((res) => {
-            console.log("remove fav",res.data.body);
+            console.log("remove fav", res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -120,7 +116,7 @@ const HomeScreen = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
-            console.log("add fav",res.data.body);
+            console.log("add fav", res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -369,7 +365,6 @@ const HomeScreen = (props) => {
                   color="#3E155A"
                   style={{ marginTop: 8 }}
                   // onPress={() => setSelectedId(item, index)}
-                  
                 />
               </View>
             );
