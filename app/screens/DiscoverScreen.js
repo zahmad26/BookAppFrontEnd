@@ -15,6 +15,7 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import author from "../assets/author.jpeg";
 import { ScrollView } from "react-native-gesture-handler";
+import ip from "../config";
 
 const DiscoverScreen = (props) => {
   const { navigation } = props;

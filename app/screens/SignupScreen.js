@@ -13,6 +13,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import axios from "axios";
+import ip from "../config";
 
 function SignUpScreen(props) {
   const [fname, setFname] = React.useState("");
@@ -34,7 +35,7 @@ function SignUpScreen(props) {
   const signup = () => {
     console.log("in SignUp", user);
     axios
-      .post("http://192.168.10.4:5000/api/users/register", user)
+      .post(`http://${ip}:5000/api/users/register`, user)
       .then((res) => {
         if (res.data.header.error != 1) {
           setSignUp(true);

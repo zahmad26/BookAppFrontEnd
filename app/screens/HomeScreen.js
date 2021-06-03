@@ -16,6 +16,7 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
+import ip from "../config";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
@@ -25,64 +26,7 @@ const HomeScreen = (props) => {
   const fname = screenProps.fname;
 
   //console.log("hello", userId, token);
-  var books = [
-    {
-      id: "1",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "2",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "3",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: true,
-    },
-    {
-      id: "4",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
 
-    {
-      id: "5",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "6",
-      name: "Oliver",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: false,
-    },
-  ];
-  //let userName = "Samima";
   let welcomeMessage = `Good Afternoon, \n${fname}`;
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState(popular);
@@ -96,7 +40,7 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.10.4:5000/api/books/favourites`, {
+      .get(`http://${ip}:5000/api/books/favourites`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -109,7 +53,7 @@ const HomeScreen = (props) => {
       });
 
     axios
-      .get(`http://192.168.10.4:5000/api/books/latest`, {
+      .get(`http://${ip}:5000/api/books/latest`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -121,7 +65,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.10.4:5000/api/books/trending`, {
+      .get(`http://${ip}:5000/api/books/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -133,7 +77,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.10.4:5000/api/books/popular`, {
+      .get(`http://${ip}:5000/api/books/popular`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -160,13 +104,9 @@ const HomeScreen = (props) => {
   const favoriteHandler = (item) => {
     item.isFavourite
       ? axios
-          .put(
-            "http://192.168.10.4:5000/api/books/favourites/remove",
-            item._id,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
+          .put(`http://${ip}:5000/api/books/favourites/remove`, item._id, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
           .then((res) => {
             //console.log(res.data);
           })
@@ -174,7 +114,7 @@ const HomeScreen = (props) => {
             console.log(res.data.header.message, err);
           })
       : axios
-          .put("http://192.168.10.4:5000/api/books/favourites/add", item._id, {
+          .put(`http://${ip}:5000/api/books/favourites/add`, item._id, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
@@ -202,10 +142,22 @@ const HomeScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.headingAndImgContainer}>
-          <Image
-            style={styles.profileImg}
-            source={require("../assets/profile-img.jpg")}
-          />
+          <TouchableOpacity
+            style={[
+              styles.explore,
+              {
+                borderRadius: 100,
+                marginRight: 0,
+                marginBottom: 12,
+                marginLeft: 0,
+              },
+            ]}
+          >
+            <Image
+              style={styles.profileImg}
+              source={require("../assets/prof.jpg")}
+            />
+          </TouchableOpacity>
           <Text style={styles.heading}>{welcomeMessage}</Text>
         </View>
         <SearchBar
@@ -221,9 +173,9 @@ const HomeScreen = (props) => {
           <Text
             style={{
               fontSize: 22,
-              paddingLeft: 24,
+              paddingLeft: 34,
               fontFamily: "playfair-display",
-              marginRight: 180,
+              marginRight: 174,
             }}
           >
             My Books
@@ -243,8 +195,9 @@ const HomeScreen = (props) => {
             keyExtractor={(item) => item._id.toString()}
             renderItem={({ item }) => {
               return (
-                <View>
+                <View style={{ marginLeft: 10 }}>
                   <TouchableOpacity
+                    style={styles.explore}
                     onPress={() =>
                       navigation.navigate("Book Details", {
                         id: item.bookID,
@@ -338,9 +291,11 @@ const HomeScreen = (props) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   marginBottom: 24,
+                  marginLeft: 9,
                 }}
               >
                 <TouchableOpacity
+                  style={[styles.explore, { marginRight: 0 }]}
                   onPress={() =>
                     navigation.navigate("Book Details", {
                       id: item.bookID,
@@ -466,7 +421,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 89,
     height: 140,
-    marginRight: 24,
   },
   listedBook: {
     borderRadius: 8,
@@ -475,6 +429,7 @@ const styles = StyleSheet.create({
   },
   bookNames: {
     fontFamily: "open-sans",
+    marginTop: 5,
   },
   searchContainerStyle: {
     backgroundColor: "#fff",
@@ -497,6 +452,16 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 12,
     textTransform: "capitalize",
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
   },
 });
 
