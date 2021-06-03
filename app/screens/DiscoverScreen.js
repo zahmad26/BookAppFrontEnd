@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,7 @@ import Oliver from "../assets/oliver-t.png";
 import author from "../assets/author.jpeg";
 import { ScrollView } from "react-native-gesture-handler";
 import ip from "../config";
+import axios from "axios";
 
 const DiscoverScreen = (props) => {
   const { navigation } = props;
@@ -24,95 +25,91 @@ const DiscoverScreen = (props) => {
   const token = screenProps.token;
   const fname = screenProps.fname;
   //console.log(props.route.params.data.route.params.data.route.params);
+  const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [trending, setTrending] = useState([]);
+  const [latest, setLatest] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [topAuthors, setTopAuthors] = useState([]);
   const discoverHeading = "What will you read\nnext?";
+
+  useEffect(() => {
+    axios
+      .get(`http://${ip}:5000/api/books/latest`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        //console.log("latest",res.data.latest);
+        if (res.data) {
+          setLatest(res.data.latest);
+        } else {
+          console.log("Could not get data");
+        }
+      });
+    axios
+      .get(`http://${ip}:5000/api/books/trending`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        //console.log("trending",res.data.trending);
+        if (res.data) {
+          setTrending(res.data.trending);
+          setData(res.data.trending);
+        } else {
+          console.log("Could not get data");
+        }
+      });
+    axios
+      .get(`http://${ip}:5000/api/books/popular`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        //console.log("popular",res.data.popular);
+        if (res.data) {
+          setPopular(res.data.popular);
+        } else {
+          console.log("Could not get data");
+        }
+      });
+    axios
+      .get(`http://${ip}:5000/api/authors/top`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        //console.log("top authors", res.data.TopAuthors);
+        if (res.data) {
+          setTopAuthors(res.data.TopAuthors);
+        } else {
+          console.log("Could not get data");
+        }
+      });
+  }, []);
+
   const updateSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
     //console.log(searchTerm);
   };
-  let books = [
-    {
-      id: "1",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "2",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "3",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: true,
-    },
-    {
-      id: "4",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "5",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "6",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: false,
-    },
-  ];
-
-  let authors = [
-    {
-      id: "1",
-      url: author,
-      name: "halsey",
-    },
-    {
-      id: "2",
-      url: author,
-      name: "halsey",
-    },
-    {
-      id: "3",
-      url: author,
-      name: "halsey",
-    },
-  ];
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.headingAndImgContainer}>
-          <Image
-            style={styles.profileImg}
-            source={require("../assets/profile-img.jpg")}
-          />
+          <TouchableOpacity
+            style={[
+              styles.explore,
+              {
+                borderRadius: 100,
+                marginRight: 0,
+                marginBottom: 12,
+                marginLeft: 0,
+              },
+            ]}
+          >
+            <Image
+              style={styles.profileImg}
+              source={require("../assets/prof.jpg")}
+            />
+          </TouchableOpacity>
           <Text style={styles.heading}>{discoverHeading}</Text>
         </View>
         <SearchBar
@@ -133,6 +130,15 @@ const DiscoverScreen = (props) => {
               marginLeft: 7,
             }}
             variant={"default"}
+            onChange={(index) => {
+              if (index == 0) {
+                setData(popular);
+              } else if (index == 1) {
+                setData(trending);
+              } else if (index == 2) {
+                setData(latest);
+              }
+            }}
           >
             <Tab.Item
               title="Top"
@@ -175,15 +181,26 @@ const DiscoverScreen = (props) => {
           <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={books}
-            keyExtractor={(item) => item.id}
+            data={data}
+            keyExtractor={(i) => i.bookID}
             renderItem={({ item }) => {
               return (
-                <View>
+                <View style={{ marginLeft: 10 }}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("Book Details")}
+                    style={styles.explore}
+                    onPress={() =>
+                      navigation.navigate("Book Details", {
+                        id: item.bookID,
+                        token: token,
+                      })
+                    }
                   >
-                    <Image style={styles.book} source={item.url} />
+                    <Image
+                      style={styles.book}
+                      source={{
+                        uri: item.url,
+                      }}
+                    />
                   </TouchableOpacity>
                   <Text style={styles.bookNames}>{item.name}</Text>
                 </View>
@@ -213,15 +230,33 @@ const DiscoverScreen = (props) => {
           <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={authors}
-            keyExtractor={(item) => item.id}
+            data={topAuthors}
+            keyExtractor={(i) => i._id}
             renderItem={({ item }) => {
               return (
                 <View>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("Author")}
+                    style={[
+                      styles.explore,
+                      {
+                        borderRadius: 100,
+                        marginBottom: 18,
+                        marginRight: 40,
+                      },
+                    ]}
+                    onPress={() =>
+                      navigation.navigate("Author", {
+                        id: item._id,
+                        token: token,
+                      })
+                    }
                   >
-                    <Image style={styles.author} source={item.url} />
+                    <Image
+                      style={styles.author}
+                      source={{
+                        uri: item.url,
+                      }}
+                    />
                   </TouchableOpacity>
                 </View>
               );
@@ -276,13 +311,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 105,
     height: 168,
-    marginRight: 24,
   },
   author: {
     borderRadius: 100,
     width: 78,
     height: 78,
-    marginRight: 40,
+    marginRight: 0,
   },
   listedBook: {
     borderRadius: 8,
@@ -313,6 +347,16 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 14,
     textTransform: "capitalize",
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
   },
 });
 
