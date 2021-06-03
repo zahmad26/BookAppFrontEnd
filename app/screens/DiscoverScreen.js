@@ -15,13 +15,15 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import author from "../assets/author.jpeg";
 import { ScrollView } from "react-native-gesture-handler";
+import ip from "../config";
 
 const DiscoverScreen = (props) => {
   const { navigation } = props;
-  const screenProps = props.route.params.props.route.params.data.route.params;
-  const userId = screenProps.userId;
-  const token = screenProps.token;
-  const fname = screenProps.fname;
+  // const screenProps = props.route.params.props.route.params.data.route.params;
+  // const userId = screenProps.userId;
+  // const token = screenProps.token;
+  // const fname = screenProps.fname;
+  console.log(props);
   const [searchTerm, setSearchTerm] = useState("");
   const discoverHeading = "What will you read\nnext?";
   const updateSearch = (searchTerm) => {

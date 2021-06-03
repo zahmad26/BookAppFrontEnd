@@ -16,6 +16,7 @@ import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
+import ip from "../config";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
@@ -96,7 +97,7 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.10.4:5000/api/books/favourites`, {
+      .get(`http://${ip}:5000/api/books/favourites`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -109,7 +110,7 @@ const HomeScreen = (props) => {
       });
 
     axios
-      .get(`http://192.168.10.4:5000/api/books/latest`, {
+      .get(`http://${ip}:5000/api/books/latest`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -121,7 +122,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.10.4:5000/api/books/trending`, {
+      .get(`http://${ip}:5000/api/books/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -133,7 +134,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.10.4:5000/api/books/popular`, {
+      .get(`http://${ip}:5000/api/books/popular`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -161,7 +162,7 @@ const HomeScreen = (props) => {
     item.isFavourite
       ? axios
           .put(
-            "http://192.168.10.4:5000/api/books/favourites/remove",
+            `http://${ip}:5000/api/books/favourites/remove`,
             item._id,
             {
               headers: { Authorization: `Bearer ${token}` },
@@ -174,7 +175,7 @@ const HomeScreen = (props) => {
             console.log(res.data.header.message, err);
           })
       : axios
-          .put("http://192.168.10.4:5000/api/books/favourites/add", item._id, {
+          .put(`http://${ip}:5000/api/books/favourites/add`, item._id, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
@@ -240,7 +241,7 @@ const HomeScreen = (props) => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={favourites}
-            keyExtractor={(item) => item._id.toString()}
+            keyExtractor={(item) => item.bookID.toString()}
             renderItem={({ item }) => {
               return (
                 <View>

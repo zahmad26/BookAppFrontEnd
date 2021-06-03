@@ -9,6 +9,7 @@ import {
   ImageBackground,
 } from "react-native";
 import axios from "axios";
+import ip from "../config";
 
 const LoginScreen = (props) => {
   const [email, setEmail] = React.useState("");
@@ -24,11 +25,11 @@ const LoginScreen = (props) => {
   const login = () => {
     //console.log("in Login", user);
     axios
-      .post("http://192.168.10.4:5000/api/users/login", user)
+      .post(`http://${ip}:5000/api/users/login`, user)
       .then((res) => {
         if (res.data.header.error != 1) {
           setLoggedIn(true);
-          //console.log(res.data.header.message, res.data.body);
+          console.log(res.data.header.message, res.data.body);
           props.navigation.navigate("Tabs", {
             token: res.data.body.token,
             userId: res.data.body.id,
