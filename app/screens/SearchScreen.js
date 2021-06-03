@@ -162,17 +162,26 @@ const SearchScreen = (props) => {
                 return (
                   <View>
                     <TouchableOpacity
-                      onPress={() => props.navigation.navigate("List Screen")}
-                      style={{
-                        height: 100,
-                        width: 150,
-                        backgroundColor: item.color,
-                        marginRight: 10,
-                        marginLeft: 10,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        borderRadius: 15,
-                      }}
+                      onPress={() =>
+                        props.navigation.navigate("List Screen", {
+                          id: item._id,
+                          cname: item.cname,
+                          token: token,
+                        })
+                      }
+                      style={[
+                        styles.explore,
+                        {
+                          height: 100,
+                          width: 150,
+                          backgroundColor: item.color,
+                          marginRight: 10,
+                          marginLeft: 10,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          borderRadius: 15,
+                        },
+                      ]}
                     >
                       <Text
                         style={{
@@ -291,6 +300,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 75,
     height: 113,
+  },
+  explore: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#6A2898",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    marginRight: 24,
   },
 });
 
