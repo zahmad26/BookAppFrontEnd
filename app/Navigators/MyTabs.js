@@ -11,7 +11,7 @@ import SearchScreen from "./SearchStack";
 import ShelfStack from "./ShelfStack";
 
 const Tab = createBottomTabNavigator();
-const MyTabs = () => {
+const MyTabs = (props) => {
   return (
     <Tab.Navigator
       initialRouteName={"Home"}
@@ -30,6 +30,7 @@ const MyTabs = () => {
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
+        initialParams={{data: props}}
       />
       <Tab.Screen
         name="Discover"

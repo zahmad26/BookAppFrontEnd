@@ -21,29 +21,33 @@ export default function App() {
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   if (fontsLoaded) {
-    return(
-    <NavigationContainer>
-        <Stack.Navigator
-            initialRouteName="Splash"
-            
-          >
-            <Stack.Screen
-                name="Splash"
-                component={WelcomeScreen}
-                options={{ headerShown: false }}
-            />
-
-            <Stack.Screen
-                name="Tabs"
-                component={MyTabs}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={SignUpScreen} />
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Splash">
+          <Stack.Screen
+            name="Splash"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignUpScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Tabs"
+            component={MyTabs}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
-     </NavigationContainer>
-    )
-      } else {
+      </NavigationContainer>
+    );
+  } else {
     return (
       <AppLoading
         startAsync={getFonts}

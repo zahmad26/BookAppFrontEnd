@@ -22,16 +22,17 @@ const LoginScreen = (props) => {
   };
 
   const login = () => {
-    console.log("in Login", user);
+    //console.log("in Login", user);
     axios
       .post("http://192.168.18.209:5000/api/users/login", user)
       .then((res) => {
         if (res.data.header.error != 1) {
           setLoggedIn(true);
-          console.log(res.data.header.message, res);
+          //console.log(res.data.header.message, res.data.body);
           props.navigation.navigate("Tabs", {
             token: res.data.body.token,
             userId: res.data.body.id,
+            fname: res.data.body.fname,
           });
         } else {
           errMessage = res.data.header.message;

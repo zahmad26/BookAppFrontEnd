@@ -42,6 +42,7 @@ function SignUpScreen(props) {
           props.navigation.navigate("Tabs", {
             token: res.data.token,
             userId: res.data.id,
+            fname: res.data.body.fname,
           });
         }
       })
@@ -55,12 +56,7 @@ function SignUpScreen(props) {
   function SubmitButton() {
     if (fname && lname && email && username && password && confirmPw) {
       return (
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate("Tabs");
-          }}
-          style={styles.signInButton}
-        >
+        <TouchableOpacity onPress={signup} style={styles.signInButton}>
           <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
             SIGN UP
           </Text>
@@ -135,14 +131,14 @@ function SignUpScreen(props) {
             <Text style={{ color: "red", fontSize: 17, paddingTop: 2 }}>
               {signUp ? "" : errMessage}
             </Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={signup}
               style={styles.signInButton}
             >
               <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
                 SIGN UP
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <SubmitButton />
             <Text style={{ marginTop: 30, fontSize: 14 }}>
               {" "}
