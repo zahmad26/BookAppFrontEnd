@@ -16,8 +16,8 @@ import StarRating from "react-native-star-rating";
 import ip from "../config";
 
 const BookDetailsScreen = (props) => {
-  console.log("here");
-  console.log(props);
+  // console.log("here");
+   console.log("ID",props.route.params);
   const [book, setBook] = useState({});
   let starCount = 3.5;
 
@@ -67,6 +67,7 @@ const BookDetailsScreen = (props) => {
                   color: "white",
                   fontSize: 15,
                   fontFamily: "open-sans",
+                  paddingLeft:50
                 }}
               >
                 {" "}
@@ -92,9 +93,10 @@ const BookDetailsScreen = (props) => {
                   color: "white",
                   fontSize: 15,
                   fontFamily: "open-sans",
+                  paddingRight:50
                 }}
               >
-                2000 .
+                300
               </Text>
             </View>
           </View>
@@ -108,6 +110,7 @@ const BookDetailsScreen = (props) => {
                   color: "#A397AA",
                   fontSize: 15,
                   fontFamily: "open-sans",
+                  paddingLeft:43
                 }}
               >
                 {" "}
@@ -133,9 +136,10 @@ const BookDetailsScreen = (props) => {
                   color: "#A397AA",
                   fontSize: 15,
                   fontFamily: "open-sans",
+                  paddingRight:43
                 }}
               >
-                Pages .
+                Pages
               </Text>
             </View>
           </View>
@@ -275,9 +279,9 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
   },
   bookImg: {
-    width: 152,
-    height: 210,
-    // borderRadius: 180,
+    borderRadius: 8,
+    width: 146,
+    height: 233,
   },
   bg: {
     width: "100%",

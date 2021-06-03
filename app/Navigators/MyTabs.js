@@ -52,6 +52,7 @@ const MyTabs = (props) => {
             <MaterialIcons name="book" color={color} size={size} />
           ),
         }}
+        initialParams={{ data: props }}
       />
       <Tab.Screen
         name="Search"

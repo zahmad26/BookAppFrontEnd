@@ -102,7 +102,7 @@ const HomeScreen = (props) => {
   // };
 
   const favoriteHandler = (item) => {
-    console.log(item)
+    console.log("item pressed",item)
     item.isFavourite
       ? axios
           .put(
@@ -113,7 +113,7 @@ const HomeScreen = (props) => {
             }
           )
           .then((res) => {
-            console.log(res.data.body);
+            console.log("remove fav",res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -123,7 +123,7 @@ const HomeScreen = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
-            console.log(res.data.body);
+            console.log("add fav",res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -372,7 +372,7 @@ const HomeScreen = (props) => {
                   color="#3E155A"
                   style={{ marginTop: 8 }}
                   // onPress={() => setSelectedId(item, index)}
-                  onPress={() => favoriteHandler(item)}
+                  
                 />
               </View>
             );

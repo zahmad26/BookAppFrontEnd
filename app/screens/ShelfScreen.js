@@ -14,111 +14,51 @@ import Swiper from "react-native-swiper";
 import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
+import axios from "axios";
+import ip from "../config";
 
 const ShelfScreen = (props) => {
   const { navigation } = props;
+  const screenProps = props.route.params.data.route.params.data.route.params;
+  const token = screenProps.token;
+  // console.log("shelf",props.route.params.data.route.params.data.route.params)
   const [data, setData] = useState(books);
-  const [selectedId, setSelectedId] = useState(null);
-  let books = [
-    {
-      id: "1",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "2",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "3",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: true,
-    },
-    {
-      id: "4",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
+  const [favourites, setFavorites] = useState([]);
 
-    {
-      id: "5",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "6",
-      name: "Oliver",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: false,
-    },
-  ];
-  let shelfBooks = [
-    {
-      id: "1",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "2",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "3",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: true,
-    },
-  ];
+  const [selectedId, setSelectedId] = useState(null);
+
+  useEffect(() => {
+    getFavs();
+  }, []);
+  const getFavs = async () => {
+    console.log("in get fav");
+    axios
+      .get(`http://${ip}:5000/api/books/favourites`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log("fav", res.data.body.favourites);
+        if (res.data.header.error == 0) {
+          setFavorites(res.data.body.favourites);
+        } else {
+          console.log("Could not get data", res.data.header.message);
+        }
+      });
+  };
   const favoriteHandler = (item) => {
     console.log("I am pressed");
     console.log("Item", item);
 
-    const updatedBooks = books.map((book) => {
-      if (book.id === item.id) {
-        console.log("here");
-        book.favourite = !book.favourite;
-        console.log("Updated", item);
-      }
-      return book;
-    });
+    // const updatedBooks = books.map((book) => {
+    //   if (book.id === item.id) {
+    //     console.log("here");
+    //     book.favourite = !book.favourite;
+    //     console.log("Updated", item);
+    //   }
+    //   return book;
+    // });
 
-    setData(updatedBooks);
+    // setData(updatedBooks);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -129,13 +69,14 @@ const ShelfScreen = (props) => {
           marginTop: 60,
           marginRight: 24,
           marginLeft: 24,
+          marginBottom:30
         }}
       >
         <Text style={styles.heading}>My Shelf</Text>
         <Swiper
           style={styles.wrapper}
           showsButtons={true}
-          height={250}
+          height={240}
           autoplay={true}
           containerStyle={{
             marginTop: 20,
@@ -145,21 +86,23 @@ const ShelfScreen = (props) => {
           nextButton={<Text style={styles.buttonText}>›</Text>}
           prevButton={<Text style={styles.buttonText}>‹</Text>}
         >
-          {shelfBooks.map((item) => {
+          {favourites.map((item) => {
             return (
-              <View style={styles.slide} key={item.id}>
+              <View style={styles.slide} key={item.bookID}>
                 <TouchableOpacity
                   style={styles.explore}
-                  onPress={() => navigation.navigate("Book Details")}
+                  onPress={() =>
+                    navigation.navigate("Book Details", { id: item.bookID, token: token })
+                  }
                 >
-                  <Image style={styles.book} source={item.url} />
+                  <Image style={styles.book} source={{ uri: item.url }} />
                 </TouchableOpacity>
               </View>
             );
           })}
         </Swiper>
       </View>
-      <View style={{ margin: 24, marginTop: 32 }}>
+      {/* <View style={{ margin: 24, marginTop: 32 }}>
         <Tab
           indicatorStyle={{
             backgroundColor: "#EB5E0B",
@@ -221,12 +164,12 @@ const ShelfScreen = (props) => {
             titleStyle={styles.tabTitle}
           />
         </Tab>
-      </View>
+      </View> */}
 
       <FlatList
         style={{ marginLeft: 24, marginRight: 24 }}
         showsVerticalScrollIndicator={false}
-        data={books}
+        data={favourites}
         // keyExtractor={(i) => i.id}
         extraData={selectedId}
         renderItem={({ item, index }) => {
@@ -243,7 +186,7 @@ const ShelfScreen = (props) => {
                 style={[styles.explore, { marginRight: 0, marginLeft: 10 }]}
                 onPress={() => navigation.navigate("Book Details")}
               >
-                <Image style={styles.listedBook} source={item.url} />
+                <Image style={styles.listedBook} source={{uri: item.url}} />
               </TouchableOpacity>
               <View>
                 <Text
@@ -253,7 +196,7 @@ const ShelfScreen = (props) => {
                     paddingTop: 10,
                   }}
                 >
-                  {item.name}
+                  {item.title}
                 </Text>
                 <Text
                   style={{
@@ -321,6 +264,7 @@ const styles = StyleSheet.create({
   wrapper: {
     //backgroundColor: "#BCE7EA",
     height: 300,
+    paddingBottom:20
   },
   slide: {
     flex: 1,

@@ -6,15 +6,20 @@ import ShelfScreen from "../screens/ShelfScreen";
 
 const Stack = createStackNavigator();
 
-const ShelfStack = () => {
+const ShelfStack = (props) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Shelf Screen"
         component={ShelfScreen}
         options={{ headerShown: false }}
+        initialParams={{ data: props }}
       />
-      <Stack.Screen name="Book Details" component={BookDetailsScreen} />
+      <Stack.Screen
+        name="Book Details"
+        component={BookDetailsScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

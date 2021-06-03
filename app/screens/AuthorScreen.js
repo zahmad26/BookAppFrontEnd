@@ -16,11 +16,30 @@ import Oliver from "../assets/oliver-t.png";
 const AuthorScreen = (props) => {
   const { navigation } = props;
   const [data, setData] = useState(books);
+  console.log("ID",props.route.params);
+  const [book, setBook] = useState({});
   let authorName = "Anne Doe";
   let authorRating = "4.3";
   let totalRatings = "500";
   let numOfBooks = "15";
-
+  useEffect( () => {
+    getAuthor();
+  }, []);
+  const getAuthor = async () => {
+    await axios
+      .get(`http://${ip}:5000/api/author/${props.route.params.id}`, {
+        headers: { Authorization: `Bearer ${props.route.params.token}` },
+      })
+      .then((res) => {
+        console.log("author", res);
+        // if (res.data.book) {
+        //   console.log(res.data.book);
+        //   setBook(res.data.book);
+        // } else {
+        //   console.log("Could not get data");
+        // }
+      });
+  };
   var books = [
     {
       id: "1",
