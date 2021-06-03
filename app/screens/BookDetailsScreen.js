@@ -16,23 +16,27 @@ import StarRating from "react-native-star-rating";
 
 const BookDetailsScreen = (props) => {
   console.log(props.route.params.id);
+  const [book, setBook] = useState({});
   let starCount = 3.5;
 
-  useEffect(() => {
-    axios
-      .get(`http://192.168.18.209:5000/api/books/`, {
-        params: { id: props.route.params.id },
+  useEffect( () => {
+    getBook();
+  }, []);
+  const getBook = async () => {
+    await axios
+      .get(`http://192.168.18.209:5000/api/books/${props.route.params.id}`, {
+        headers: { Authorization: `Bearer ${props.route.params.token}` },
       })
       .then((res) => {
-        //console.log("trending",res.data.trending);
-        if (res) {
-         console.log(res);
+        console.log("book", res.data.book);
+        if (res.data.book) {
+          console.log(res.data.book);
+          setBook(res.data.book);
         } else {
           console.log("Could not get data");
         }
       });
-  }, []);
-
+  };
   function onStarRatingPress(rating) {
     starCount = rating;
   }
@@ -48,13 +52,10 @@ const BookDetailsScreen = (props) => {
           }}
         >
           <View style={{ marginTop: 56, alignItems: "center" }}>
-            <Image
-              style={styles.bookImg}
-              source={require("../assets/jane.jpg")}
-            />
+            <Image style={styles.bookImg} source={{ uri: book.url }} />
           </View>
-          <Text style={styles.name}>Jane Eyre</Text>
-          <Text style={styles.secname}>Charlotte Bronte</Text>
+          <Text style={styles.name}>{book.title}</Text>
+          <Text style={styles.secname}>{book.author}</Text>
 
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={{ flex: 1 }}>
@@ -67,7 +68,7 @@ const BookDetailsScreen = (props) => {
                 }}
               >
                 {" "}
-                4.3{" "}
+                {book.rating}{" "}
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -79,7 +80,7 @@ const BookDetailsScreen = (props) => {
                   fontFamily: "open-sans",
                 }}
               >
-                2,500
+                0
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -138,42 +139,6 @@ const BookDetailsScreen = (props) => {
           </View>
         </View>
         <View style={styles.c}>
-          <View style={styles.progressBar}>
-            <View
-              style={[StyleSheet.absoluteFill, { backgroundColor: "#eb5e0b" }]}
-            />
-          </View>
-          <Text style={{ paddingBottom: 20, fontFamily: "open-sans" }}>
-            {" "}
-            100% complete{" "}
-          </Text>
-          <TouchableOpacity style={styles.continutebtn}>
-            <Text
-              style={{ color: "white", fontSize: 19, fontFamily: "open-sans" }}
-            >
-              CONTINUE READING
-            </Text>
-          </TouchableOpacity>
-          <Text
-            style={{
-              color: "black",
-              fontSize: 17,
-              paddingTop: 20,
-              paddingBottom: 15,
-              fontFamily: "open-sans",
-            }}
-          >
-            Rate It
-          </Text>
-          <StarRating
-            disabled={false}
-            maxStars={5}
-            starSize={25}
-            rating={4}
-            fullStarColor={"#eb5e0b"}
-            selectedStar={(rating) => onStarRatingPress(rating)}
-          />
-
           <Text
             style={{
               textAlign: "center",
@@ -194,10 +159,27 @@ const BookDetailsScreen = (props) => {
               fontFamily: "open-sans",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-            venenatis vulputate libero, id vestibulum ante convallis id.
+            {book.description}
           </Text>
-
+          <Text
+            style={{
+              color: "black",
+              fontSize: 17,
+              paddingTop: 20,
+              paddingBottom: 15,
+              fontFamily: "open-sans",
+            }}
+          >
+            Rate It
+          </Text>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            starSize={25}
+            rating={4}
+            fullStarColor={"#eb5e0b"}
+            selectedStar={(rating) => onStarRatingPress(rating)}
+          />
           <Text
             style={{
               paddingTop: 15,

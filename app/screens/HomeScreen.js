@@ -249,7 +249,10 @@ const HomeScreen = (props) => {
                 <View>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate("Book Details", { id: item._id })
+                      navigation.navigate("Book Details", {
+                        id: item.bookID,
+                        token: token,
+                      })
                     }
                   >
                     <Image
@@ -341,7 +344,12 @@ const HomeScreen = (props) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("Book Details", {id:item._id})}
+                  onPress={() =>
+                    navigation.navigate("Book Details", {
+                      id: item.bookID,
+                      token: token,
+                    })
+                  }
                 >
                   <Image
                     style={styles.listedBook}

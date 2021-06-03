@@ -41,6 +41,7 @@ const MyTabs = (props) => {
             <MaterialCommunityIcons name="compass" color={color} size={size} />
           ),
         }}
+        initialParams={{data: props}}
       />
       <Tab.Screen
         name="Shelf"

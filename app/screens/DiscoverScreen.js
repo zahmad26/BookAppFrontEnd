@@ -18,6 +18,10 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const DiscoverScreen = (props) => {
   const { navigation } = props;
+  const screenProps = props.route.params.props.route.params.data.route.params;
+  const userId = screenProps.userId;
+  const token = screenProps.token;
+  const fname = screenProps.fname;
   const [searchTerm, setSearchTerm] = useState("");
   const discoverHeading = "What will you read\nnext?";
   const updateSearch = (searchTerm) => {
