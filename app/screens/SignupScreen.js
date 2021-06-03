@@ -57,7 +57,14 @@ function SignUpScreen(props) {
     if (fname && lname && email && username && password && confirmPw) {
       return (
         <TouchableOpacity onPress={signup} style={styles.signInButton}>
-          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              paddingTop: 2,
+              fontFamily: "open-sans",
+            }}
+          >
             SIGN UP
           </Text>
         </TouchableOpacity>
@@ -71,7 +78,14 @@ function SignUpScreen(props) {
           }}
           style={[styles.signInButton, { backgroundColor: "#816687" }]}
         >
-          <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              paddingTop: 2,
+              fontFamily: "open-sans",
+            }}
+          >
             SIGN UP
           </Text>
         </TouchableOpacity>
@@ -131,16 +145,10 @@ function SignUpScreen(props) {
             <Text style={{ color: "red", fontSize: 17, paddingTop: 2 }}>
               {signUp ? "" : errMessage}
             </Text>
-            {/* <TouchableOpacity
-              onPress={signup}
-              style={styles.signInButton}
-            >
-              <Text style={{ color: "white", fontSize: 17, paddingTop: 2 }}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity> */}
             <SubmitButton />
-            <Text style={{ marginTop: 30, fontSize: 14 }}>
+            <Text
+              style={{ marginTop: 30, fontSize: 14, fontFamily: "open-sans" }}
+            >
               {" "}
               Have an account?
             </Text>
@@ -150,7 +158,15 @@ function SignUpScreen(props) {
               }}
               style={styles.signUpBtn}
             >
-              <Text style={{ color: "#6B3F87", fontSize: 17 }}>LOG IN</Text>
+              <Text
+                style={{
+                  color: "#6B3F87",
+                  fontSize: 17,
+                  fontFamily: "open-sans",
+                }}
+              >
+                LOG IN
+              </Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -187,6 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#A397AA",
     borderWidth: 1,
+    fontFamily: "open-sans",
   },
   signInButton: {
     alignItems: "center",
