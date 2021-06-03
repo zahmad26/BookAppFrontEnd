@@ -92,10 +92,11 @@ const HomeScreen = (props) => {
   const [popular, setPopular] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   // const [isfavorite, setFavorite] = useState(false);
+  let title;
 
   useEffect(() => {
     axios
-      .get(`http://192.168.18.209:5000/api/books/favourites`, {
+      .get(`http://192.168.10.4:5000/api/books/favourites`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -108,7 +109,7 @@ const HomeScreen = (props) => {
       });
 
     axios
-      .get(`http://192.168.18.209:5000/api/books/latest`, {
+      .get(`http://192.168.10.4:5000/api/books/latest`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -120,7 +121,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.18.209:5000/api/books/trending`, {
+      .get(`http://192.168.10.4:5000/api/books/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -132,7 +133,7 @@ const HomeScreen = (props) => {
         }
       });
     axios
-      .get(`http://192.168.18.209:5000/api/books/popular`, {
+      .get(`http://192.168.10.4:5000/api/books/popular`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -160,7 +161,7 @@ const HomeScreen = (props) => {
     item.isFavourite
       ? axios
           .put(
-            "http://192.168.18.209:5000/api/books/favourites/remove",
+            "http://192.168.10.4:5000/api/books/favourites/remove",
             item._id,
             {
               headers: { Authorization: `Bearer ${token}` },
@@ -173,13 +174,9 @@ const HomeScreen = (props) => {
             console.log(res.data.header.message, err);
           })
       : axios
-          .put(
-            "http://192.168.18.209:5000/api/books/favourites/add",
-            item._id,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
+          .put("http://192.168.10.4:5000/api/books/favourites/add", item._id, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
           .then((res) => {
             //console.log(res.data);
           })
@@ -262,7 +259,10 @@ const HomeScreen = (props) => {
                       }}
                     />
                   </TouchableOpacity>
-                  <Text style={styles.bookNames}>{item.title}</Text>
+
+                  <Text style={styles.bookNames}>
+                    {item.title.substr(0, 10) + "..."}
+                  </Text>
                 </View>
               );
             }}
@@ -296,7 +296,6 @@ const HomeScreen = (props) => {
                 padding: 3,
                 borderTopLeftRadius: 8,
                 borderBottomLeftRadius: 8,
-                fontSize: 1,
               }}
               titleStyle={styles.tabTitle}
             />
@@ -307,7 +306,6 @@ const HomeScreen = (props) => {
                 backgroundColor: "#3E155A",
                 color: "#fff",
                 padding: 3,
-                fontSize: 5,
               }}
               titleStyle={styles.tabTitle}
             />
@@ -320,7 +318,6 @@ const HomeScreen = (props) => {
                 padding: 3,
                 borderTopRightRadius: 8,
                 borderBottomRightRadius: 8,
-                fontSize: 5,
               }}
               titleStyle={styles.tabTitle}
             />
@@ -358,7 +355,14 @@ const HomeScreen = (props) => {
                     }}
                   />
                 </TouchableOpacity>
-                <View>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    flex: 1,
+                    marginLeft: 20,
+                    marginRight: 20,
+                  }}
+                >
                   <Text
                     style={{
                       fontFamily: "open-sans",
@@ -491,7 +495,7 @@ const styles = StyleSheet.create({
   tabTitle: {
     color: "#fff",
     fontFamily: "open-sans",
-    fontSize: 14,
+    fontSize: 12,
     textTransform: "capitalize",
   },
 });

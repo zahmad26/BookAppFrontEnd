@@ -105,125 +105,127 @@ const DiscoverScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style = {styles.container}>
-      <View style={styles.headingAndImgContainer}>
-        <Image
-          style={styles.profileImg}
-          source={require("../assets/profile-img.jpg")}
-        />
-        <Text style={styles.heading}>{discoverHeading}</Text>
-      </View>
-      <SearchBar
-        placeholder="Search..."
-        onChangeText={updateSearch}
-        value={searchTerm}
-        containerStyle={styles.searchContainerStyle}
-        inputContainerStyle={styles.searchInputContainerStyle}
-        lightTheme={true}
-        inputStyle={styles.searchInputStyle}
-      />
-
-      <View style={{ margin: 24, marginBottom: 0 }}>
-        <Tab
-          indicatorStyle={{
-            backgroundColor: "#EB5E0B",
-            width: 96,
-            marginLeft: 7,
-          }}
-          variant={"default"}
-        >
-          <Tab.Item
-            title="Top"
-            value="0"
-            buttonStyle={{
-              backgroundColor: "#3E155A",
-              color: "#fff",
-              padding: 5,
-              borderTopLeftRadius: 8,
-              borderBottomLeftRadius: 8,
-            }}
-            titleStyle={styles.tabTitle}
+      <ScrollView style={styles.container}>
+        <View style={styles.headingAndImgContainer}>
+          <Image
+            style={styles.profileImg}
+            source={require("../assets/profile-img.jpg")}
           />
-          <Tab.Item
-            title="Trending"
-            value="1"
-            buttonStyle={{
-              backgroundColor: "#3E155A",
-              color: "#fff",
-              padding: 5,
-            }}
-            titleStyle={styles.tabTitle}
-          />
-          <Tab.Item
-            title="Latest"
-            value="2"
-            buttonStyle={{
-              backgroundColor: "#3E155A",
-              color: "#fff",
-              padding: 5,
-              borderTopRightRadius: 8,
-              borderBottomRightRadius: 8,
-            }}
-            titleStyle={styles.tabTitle}
-          />
-        </Tab>
-      </View>
+          <Text style={styles.heading}>{discoverHeading}</Text>
+        </View>
+        <SearchBar
+          placeholder="Search..."
+          onChangeText={updateSearch}
+          value={searchTerm}
+          containerStyle={styles.searchContainerStyle}
+          inputContainerStyle={styles.searchInputContainerStyle}
+          lightTheme={true}
+          inputStyle={styles.searchInputStyle}
+        />
 
-      <View style={styles.booksContainer}>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={books}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            return (
-              <View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Book Details")}
-                >
-                  <Image style={styles.book} source={item.url} />
-                </TouchableOpacity>
-                <Text style={styles.bookNames}>{item.name}</Text>
-              </View>
-            );
-          }}
-        />
-      </View>
-      <View style={{ flexDirection: "row", marginTop: 40 }}>
-        <Text
-          style={{
-            fontSize: 16,
-            paddingLeft: 24,
-            fontFamily: "open-sans",
-            marginRight: 180,
-          }}
-        >
-          Top Authors
-        </Text>
-        <MaterialCommunityIcons
-          name="dots-horizontal"
-          size={32}
-          color="black"
-        />
-      </View>
+        <View style={{ margin: 24, marginBottom: 0 }}>
+          <Tab
+            indicatorStyle={{
+              backgroundColor: "#EB5E0B",
+              width: 96,
+              marginLeft: 7,
+            }}
+            variant={"default"}
+          >
+            <Tab.Item
+              title="Top"
+              value="0"
+              buttonStyle={{
+                backgroundColor: "#3E155A",
+                color: "#fff",
+                padding: 5,
+                borderTopLeftRadius: 8,
+                borderBottomLeftRadius: 8,
+              }}
+              titleStyle={styles.tabTitle}
+            />
+            <Tab.Item
+              title="Trending"
+              value="1"
+              buttonStyle={{
+                backgroundColor: "#3E155A",
+                color: "#fff",
+                padding: 5,
+              }}
+              titleStyle={styles.tabTitle}
+            />
+            <Tab.Item
+              title="Latest"
+              value="2"
+              buttonStyle={{
+                backgroundColor: "#3E155A",
+                color: "#fff",
+                padding: 5,
+                borderTopRightRadius: 8,
+                borderBottomRightRadius: 8,
+              }}
+              titleStyle={styles.tabTitle}
+            />
+          </Tab>
+        </View>
 
-      <View style={styles.authorsContainer}>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={authors}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            return (
-              <View>
-                <TouchableOpacity onPress={() => navigation.navigate("Author")}>
-                  <Image style={styles.author} source={item.url} />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
-      </View>
+        <View style={styles.booksContainer}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={books}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Book Details")}
+                  >
+                    <Image style={styles.book} source={item.url} />
+                  </TouchableOpacity>
+                  <Text style={styles.bookNames}>{item.name}</Text>
+                </View>
+              );
+            }}
+          />
+        </View>
+        <View style={{ flexDirection: "row", marginTop: 40 }}>
+          <Text
+            style={{
+              fontSize: 16,
+              paddingLeft: 24,
+              fontFamily: "open-sans",
+              marginRight: 180,
+            }}
+          >
+            Top Authors
+          </Text>
+          <MaterialCommunityIcons
+            name="dots-horizontal"
+            size={32}
+            color="black"
+          />
+        </View>
+
+        <View style={styles.authorsContainer}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={authors}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Author")}
+                  >
+                    <Image style={styles.author} source={item.url} />
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
