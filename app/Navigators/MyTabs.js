@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
 import HomeStack from "./HomeStack";
 import DiscoverStack from "./DiscoverStack";
-import SearchScreen from "./SearchStack";
+import SearchStack from "./SearchStack";
 import ShelfStack from "./ShelfStack";
 
 const Tab = createBottomTabNavigator();
@@ -56,13 +56,14 @@ const MyTabs = (props) => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchStack}
         options={{
           tabBarLabel: "Search",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
           ),
         }}
+        initialParams={{ data: props }}
       />
       <Tab.Screen
         name="Profile"

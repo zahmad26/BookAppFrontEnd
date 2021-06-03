@@ -8,13 +8,14 @@ import BookDetailsScreen from "../screens/BookDetailsScreen";
 
 const Stack = createStackNavigator();
 
-const SearchStack = () => {
+const SearchStack = (props) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Search"
         component={SearchScreen}
         options={{ headerShown: false }}
+        initialParams={{ data: props }}
       />
       <Stack.Screen
         name="List Screen"
