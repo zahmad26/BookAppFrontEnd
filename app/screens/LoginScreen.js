@@ -29,7 +29,7 @@ const LoginScreen = (props) => {
       .then((res) => {
         if (res.data.header.error != 1) {
           setLoggedIn(true);
-          //console.log(res.data.header.message, res.data.body);
+          console.log(res.data.header.message, res.data.body);
           props.navigation.navigate("Tabs", {
             token: res.data.body.token,
             userId: res.data.body.id,

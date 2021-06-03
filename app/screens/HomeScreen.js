@@ -192,7 +192,7 @@ const HomeScreen = (props) => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={favourites}
-            keyExtractor={(item) => item._id.toString()}
+            keyExtractor={(item) => item.bookID.toString()}
             renderItem={({ item }) => {
               return (
                 <View style={{ marginLeft: 10 }}>

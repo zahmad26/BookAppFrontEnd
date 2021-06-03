@@ -13,9 +13,11 @@ import {
   Animated,
 } from "react-native";
 import StarRating from "react-native-star-rating";
+import ip from "../config";
 
 const BookDetailsScreen = (props) => {
-  console.log(props.route.params.id);
+  console.log("here");
+  console.log(props);
   const [book, setBook] = useState({});
   let starCount = 3.5;
 
@@ -24,7 +26,7 @@ const BookDetailsScreen = (props) => {
   }, []);
   const getBook = async () => {
     await axios
-      .get(`http://192.168.18.209:5000/api/books/${props.route.params.id}`, {
+      .get(`http://${ip}:5000/api/books/${props.route.params.id}`, {
         headers: { Authorization: `Bearer ${props.route.params.token}` },
       })
       .then((res) => {
