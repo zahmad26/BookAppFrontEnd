@@ -86,12 +86,11 @@ const HomeScreen = (props) => {
   //let userName = "Samima";
   let welcomeMessage = `Good Afternoon, \n${fname}`;
   const [searchTerm, setSearchTerm] = useState("");
-  const [data, setData] = useState(popular);
+  const [data, setData] = useState([]);
   const [favourites, setFavorites] = useState([]);
   const [trending, setTrending] = useState([]);
   const [latest, setLatest] = useState([]);
   const [popular, setPopular] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
   // const [isfavorite, setFavorite] = useState(false);
   let title;
 
@@ -129,6 +128,7 @@ const HomeScreen = (props) => {
         //console.log("trending",res.data.trending);
         if (res.data) {
           setTrending(res.data.trending);
+          setData(res.data.trending)
         } else {
           console.log("Could not get data");
         }
@@ -159,27 +159,28 @@ const HomeScreen = (props) => {
   // };
 
   const favoriteHandler = (item) => {
+    console.log(item)
     item.isFavourite
       ? axios
           .put(
             `http://${ip}:5000/api/books/favourites/remove`,
-            item._id,
+            item.bookID,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
           )
           .then((res) => {
-            //console.log(res.data);
+            console.log(res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
           })
       : axios
-          .put(`http://${ip}:5000/api/books/favourites/add`, item._id, {
+          .put(`http://${ip}:5000/api/books/favourites/add`, item.bookID, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
-            //console.log(res.data);
+            console.log(res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -272,11 +273,7 @@ const HomeScreen = (props) => {
 
         <View style={{ margin: 24 }}>
           <Tab
-            indicatorStyle={{
-              backgroundColor: "#EB5E0B",
-              width: 96,
-              marginLeft: 7,
-            }}
+            disableIndicator="true"
             variant={"default"}
             onChange={(index) => {
               if (index == 0) {
@@ -329,8 +326,7 @@ const HomeScreen = (props) => {
           style={{ marginLeft: 24, marginRight: 24 }}
           showsVerticalScrollIndicator={false}
           data={data}
-          keyExtractor={(i) => i._id}
-          extraData={selectedId}
+          keyExtractor={(i) => i.bookID}
           renderItem={({ item, index }) => {
             // console.log(i);
             return (
