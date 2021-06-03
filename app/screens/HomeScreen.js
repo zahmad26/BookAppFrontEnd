@@ -24,15 +24,16 @@ const HomeScreen = (props) => {
 
   //console.log("hello", userId, token);
 
-  let welcomeMessage = `Good Afternoon, \n${fname}`;
+  //let welcomeMessage = `Good Afternoon, \n${fname}`;
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [favourites, setFavorites] = useState([]);
   const [trending, setTrending] = useState([]);
   const [latest, setLatest] = useState([]);
   const [popular, setPopular] = useState([]);
+  const [greeting, setGreeting] = useState("");
+  let hour;
   // const [isfavorite, setFavorite] = useState(false);
-  let title;
 
   useEffect(() => {
     axios
@@ -68,7 +69,7 @@ const HomeScreen = (props) => {
         //console.log("trending",res.data.trending);
         if (res.data) {
           setTrending(res.data.trending);
-          setData(res.data.trending)
+          setData(res.data.trending);
         } else {
           console.log("Could not get data");
         }
@@ -85,6 +86,10 @@ const HomeScreen = (props) => {
           console.log("Could not get data");
         }
       });
+    hour = new Date().getHours();
+    if (hour < 12) setGreeting(`Good Morning, \n${fname}`);
+    else if (hour < 18) setGreeting(`Good Afternoon, \n${fname}`);
+    else setGreeting(`Good Evening, \n${fname}`);
   }, []);
 
   const updateSearch = (searchTerm) => {
@@ -99,18 +104,14 @@ const HomeScreen = (props) => {
   // };
 
   const favoriteHandler = (item) => {
-    console.log("item pressed",item)
+    console.log("item pressed", item);
     item.isFavourite
       ? axios
-          .put(
-            `http://${ip}:5000/api/books/favourites/remove`,
-            item.bookID,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          )
+          .put(`http://${ip}:5000/api/books/favourites/remove`, item.bookID, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
           .then((res) => {
-            console.log("remove fav",res.data.body);
+            console.log("remove fav", res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -120,7 +121,7 @@ const HomeScreen = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
-            console.log("add fav",res.data.body);
+            console.log("add fav", res.data.body);
           })
           .catch((err) => {
             console.log(res.data.header.message, err);
@@ -160,7 +161,8 @@ const HomeScreen = (props) => {
               source={require("../assets/prof.jpg")}
             />
           </TouchableOpacity>
-          <Text style={styles.heading}>{welcomeMessage}</Text>
+
+          <Text style={styles.heading}>{greeting}</Text>
         </View>
         <SearchBar
           placeholder="Search..."
@@ -369,7 +371,6 @@ const HomeScreen = (props) => {
                   color="#3E155A"
                   style={{ marginTop: 8 }}
                   // onPress={() => setSelectedId(item, index)}
-                  
                 />
               </View>
             );
