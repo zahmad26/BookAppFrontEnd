@@ -24,7 +24,7 @@ const LoginScreen = (props) => {
   const login = () => {
     //console.log("in Login", user);
     axios
-      .post("http://192.168.18.209:5000/api/users/login", user)
+      .post("http://192.168.10.4:5000/api/users/login", user)
       .then((res) => {
         if (res.data.header.error != 1) {
           setLoggedIn(true);
