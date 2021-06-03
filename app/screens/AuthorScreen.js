@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,32 +12,58 @@ import { Ionicons } from "@expo/vector-icons";
 import Dracula from "../assets/dracula.png";
 import Huck from "../assets/huck.png";
 import Oliver from "../assets/oliver-t.png";
+import axios from "axios";
+import ip from "../config";
 
 const AuthorScreen = (props) => {
   const { navigation } = props;
   const [data, setData] = useState(books);
-  console.log("ID",props.route.params);
-  const [book, setBook] = useState({});
+  //console.log("ID", props.route.params);
+  const [author, setAuthor] = useState([]);
+  const [aBooks, setBooks] = useState([]);
   let authorName = "Anne Doe";
   let authorRating = "4.3";
   let totalRatings = "500";
   let numOfBooks = "15";
-  useEffect( () => {
+  useEffect(() => {
     getAuthor();
   }, []);
+  
   const getAuthor = async () => {
     await axios
-      .get(`http://${ip}:5000/api/author/${props.route.params.id}`, {
+      .get(`http://${ip}:5000/api/authors/${props.route.params.id}`, {
         headers: { Authorization: `Bearer ${props.route.params.token}` },
       })
       .then((res) => {
-        console.log("author", res);
-        // if (res.data.book) {
-        //   console.log(res.data.book);
-        //   setBook(res.data.book);
-        // } else {
-        //   console.log("Could not get data");
-        // }
+        //console.log("author", res.data.author);
+        if (res.data.author) {
+          console.log("author", res.data.author);
+          setAuthor(res.data.author);
+          getBooks();
+        } else {
+          console.log("Could not get data");
+        }
+      });
+  };
+
+  const getBooks = async () => {
+    await axios
+      .get(`http://${ip}:5000/api/books/`, {
+        headers: { Authorization: `Bearer ${props.route.params.token}` },
+      })
+      .then((res) => {
+        //console.log("author", res.data.author);
+        if (res.data.books) {
+          //console.log("books", res.data.books);
+          setBooks(
+            res.data.books.filter((book) => {
+              if (book.authorID == author._id) return book;
+            })
+          );
+          //console.log("author books",aBooks)
+        } else {
+          console.log("Could not get data");
+        }
       });
   };
   var books = [
@@ -124,11 +150,8 @@ const AuthorScreen = (props) => {
           }}
         >
           <View style={{ marginTop: 56, alignItems: "center" }}>
-            <Image
-              style={styles.profileImg}
-              source={require("../assets/author.jpeg")}
-            />
-            <Text style={styles.name}>{authorName}</Text>
+            <Image style={styles.profileImg} source={{ uri: author.url }} />
+            <Text style={styles.name}>{author.aname}</Text>
           </View>
 
           <View
@@ -139,7 +162,7 @@ const AuthorScreen = (props) => {
             }}
           >
             <View>
-              <Text style={styles.details}>{authorRating}</Text>
+              <Text style={styles.details}>{author.rating}</Text>
               <Text style={styles.details}>Rating</Text>
             </View>
             <View>
@@ -173,9 +196,7 @@ const AuthorScreen = (props) => {
               marginTop: 16,
             }}
           >
-            Anne Doe was brought up in Nova Scotia, in Price Edward Islands. She
-            moved to Chicago in 2006 and started her writing career while
-            studying at the University of Chicago.
+            {author.description}
           </Text>
           <Text
             style={{
@@ -188,11 +209,10 @@ const AuthorScreen = (props) => {
             Books by this Author
           </Text>
         </View>
-
-        {books.map((item) => {
+        {aBooks.length > 0 && aBooks.map((item) => {
           return (
             <View
-              key={item.id}
+              key={item.bookID}
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -201,9 +221,12 @@ const AuthorScreen = (props) => {
               }}
             >
               <TouchableOpacity
-                onPress={() => navigation.navigate("Book Details")}
+                onPress={() => navigation.navigate("Book Details",{
+                  id:item.bookID,
+                  token:token
+                })}
               >
-                <Image style={styles.listedBook} source={item.url} />
+                <Image style={styles.listedBook} source={{uri:item.url}} />
               </TouchableOpacity>
               <View>
                 <Text
@@ -213,7 +236,7 @@ const AuthorScreen = (props) => {
                     paddingTop: 10,
                   }}
                 >
-                  {item.name}
+                  {item.title}
                 </Text>
                 <Text
                   style={{
@@ -250,7 +273,7 @@ const AuthorScreen = (props) => {
                       paddingTop: 8,
                     }}
                   >
-                    {item.totalRatings} ratings
+                    10 ratings
                   </Text>
                 </View>
               </View>

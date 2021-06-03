@@ -11,9 +11,6 @@ import {
 import { SearchBar, Tab } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import Dracula from "../assets/dracula.png";
-import Huck from "../assets/huck.png";
-import Oliver from "../assets/oliver-t.png";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import ip from "../config";

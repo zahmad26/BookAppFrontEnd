@@ -22,7 +22,7 @@ const ShelfScreen = (props) => {
   const screenProps = props.route.params.data.route.params.data.route.params;
   const token = screenProps.token;
   // console.log("shelf",props.route.params.data.route.params.data.route.params)
-  const [data, setData] = useState(books);
+  const [data, setData] = useState();
   const [favourites, setFavorites] = useState([]);
 
   const [selectedId, setSelectedId] = useState(null);
