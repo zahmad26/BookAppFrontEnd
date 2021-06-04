@@ -20,7 +20,7 @@ const AuthorScreen = (props) => {
   const id = screenProps.id;
   const [author, setAuthor] = useState([]);
   const [numOfBooks, setNum] = useState(15);
-  const [data, setData] = useState(books);
+  const [data, setData] = useState([]);
   let totalRatings = "500";
   useEffect(() => {
     axios
