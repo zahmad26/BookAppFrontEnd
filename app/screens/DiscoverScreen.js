@@ -123,7 +123,7 @@ const DiscoverScreen = (props) => {
           </TouchableOpacity>
           <Text style={styles.heading}>{discoverHeading}</Text>
         </View>
-        <SearchBar
+        {/* <SearchBar
           placeholder="Search..."
           onChangeText={updateSearch}
           value={searchTerm}
@@ -131,7 +131,7 @@ const DiscoverScreen = (props) => {
           inputContainerStyle={styles.searchInputContainerStyle}
           lightTheme={true}
           inputStyle={styles.searchInputStyle}
-        />
+        /> */}
 
         <View style={{ margin: 24, marginBottom: 0 }}>
           <Tab
