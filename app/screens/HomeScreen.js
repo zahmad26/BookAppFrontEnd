@@ -37,19 +37,6 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://${ip}:5000/api/books/favourites`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        //console.log("fav",res.data);
-        if (res.data.header.error == 0) {
-          setFavorites(res.data.body.favourites);
-        } else {
-          console.log("Could not get data", res.data.header.message);
-        }
-      });
-
-    axios
       .get(`http://${ip}:5000/api/books/latest`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -60,6 +47,9 @@ const HomeScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get latest failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/books/trending`, {
@@ -73,6 +63,9 @@ const HomeScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get trending failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/books/popular`, {
@@ -85,12 +78,39 @@ const HomeScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get popular failed", err);
       });
     hour = new Date().getHours();
     if (hour < 12) setGreeting(`Good Morning, \n${fname}`);
     else if (hour < 18) setGreeting(`Good Afternoon, \n${fname}`);
     else setGreeting(`Good Evening, \n${fname}`);
-  }, []);
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      getFavs();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const getFavs = async () => {
+    console.log("in get fav");
+    await axios
+      .get(`http://${ip}:5000/api/books/favourites`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log("fav", res.data.body.favourites);
+        if (res.data.header.error == 0) {
+          setFavorites(res.data.body.favourites);
+        } else {
+          console.log("Could not get data", res.data.header.message);
+        }
+      })
+      .catch((err) => {
+        console.log("get fav failed", err);
+      });
+  };
 
   const updateSearch = (searchTerm) => {
     setSearchTerm(searchTerm);

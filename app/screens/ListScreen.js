@@ -38,6 +38,9 @@ const ListScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get books failed", err);
       });
   }, []);
 

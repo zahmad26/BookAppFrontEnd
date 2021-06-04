@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import {
   SafeAreaView,
   View,
@@ -23,12 +24,19 @@ const ShelfScreen = (props) => {
 
   const [selectedId, setSelectedId] = useState(null);
 
+  // useEffect(() => {
+  //   getFavs();
+  // }, []);
   useEffect(() => {
-    getFavs();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getFavs();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const getFavs = async () => {
     console.log("in get fav");
-    axios
+    await axios
       .get(`http://${ip}:5000/api/books/favourites`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -39,6 +47,9 @@ const ShelfScreen = (props) => {
         } else {
           console.log("Could not get data", res.data.header.message);
         }
+      })
+      .catch((err) => {
+        console.log("get fav failed", err);
       });
   };
   const favoriteHandler = (item) => {

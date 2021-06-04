@@ -18,10 +18,10 @@ import { FontAwesome } from "@expo/vector-icons";
 
 const BookDetailsScreen = (props) => {
   // console.log("here");
-  console.log("ID", props.route.params);
+  //console.log("ID", props.route.params);
   const screenProps = props.route.params;
-  const token = screenProps.token;
-  const id = screenProps.id;
+  const [id, setID] = useState(screenProps.id);
+  const [token, setToken] = useState(screenProps.token);
   const [book, setBook] = useState({});
   const [isFavorite, setFavorite] = useState(false);
   let starCount = 3.5;
@@ -53,9 +53,9 @@ const BookDetailsScreen = (props) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log("book", res.data.book);
+        //console.log("book", res.data.book);
         if (res.data.book) {
-          console.log(res.data.book);
+          //console.log(res.data.book);
           setBook(res.data.book);
         } else {
           console.log("Could not get data");
@@ -70,41 +70,45 @@ const BookDetailsScreen = (props) => {
     starCount = rating;
   }
   const favoriteHandler = (isFav) => {
-    console.log("here", isFav);
     isFav
       ? axios
-          .put(`http://${ip}:5000/api/books/favourites/remove`, id, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
+          .put(
+            `http://${ip}:5000/api/books/favourites/remove`,
+            { id: id },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          )
           .then((res) => {
-            console.log("fav after remove", res.data.favourites);
-            if (res.data.favourites) {
-              console.log("fav after remove", res.data.favourites);
+            //console.log("remove fav data", res.data);
+            if (res.data.header.error == 0) {
               setFavorite(false);
             } else {
-              console.log("Could not get data");
+              console.log(res.data.header.message);
             }
           })
           .catch((err) => {
             console.log("remove fav failed", err);
           })
-      : console.log("here2");
-    axios
-      .put(`http://${ip}:5000/api/books/favourites/add`, id, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        console.log("fav after add", res.data.favourites);
-        if (res.data.favourites) {
-          console.log("fav after add", res.data.favourites);
-          setFavorite(true);
-        } else {
-          console.log("Could not get data");
-        }
-      })
-      .catch((err) => {
-        console.log("add fav failed", err);
-      });
+      : axios
+          .put(
+            `http://${ip}:5000/api/books/favourites/add`,
+            { id: id },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          )
+          .then((res) => {
+            //console.log("add fav data", res.data);
+            if (res.data.header.error == 0) {
+              setFavorite(true);
+            } else {
+              console.log(res.data.header.message);
+            }
+          })
+          .catch((err) => {
+            console.log("add fav failed", err);
+          });
   };
 
   return (
@@ -132,6 +136,7 @@ const BookDetailsScreen = (props) => {
               {isFavorite ? (
                 <TouchableOpacity
                   onPress={() => {
+                    //console.log("unfav button pressed");
                     favoriteHandler(isFavorite);
                   }}
                 >
@@ -145,6 +150,7 @@ const BookDetailsScreen = (props) => {
               ) : (
                 <TouchableOpacity
                   onPress={() => {
+                    //console.log("fav button pressed");
                     favoriteHandler(isFavorite);
                   }}
                 >

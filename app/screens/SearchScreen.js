@@ -217,6 +217,9 @@ const SearchScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get categories failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/books/`, {
@@ -230,6 +233,8 @@ const SearchScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      }).catch((err) => {
+        console.log("get books failed", err);
       });
   }, []);
 

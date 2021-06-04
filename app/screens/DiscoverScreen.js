@@ -45,6 +45,8 @@ const DiscoverScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      }).catch((err) => {
+        console.log("get latest failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/books/trending`, {
@@ -58,6 +60,9 @@ const DiscoverScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get trending failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/books/popular`, {
@@ -70,6 +75,9 @@ const DiscoverScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get popular failed", err);
       });
     axios
       .get(`http://${ip}:5000/api/authors/top`, {
@@ -82,6 +90,9 @@ const DiscoverScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get top authors failed", err);
       });
   }, []);
 
