@@ -9,137 +9,71 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Dracula from "../assets/dracula.png";
-import Huck from "../assets/huck.png";
-import Oliver from "../assets/oliver-t.png";
 import axios from "axios";
 import ip from "../config";
 
 const AuthorScreen = (props) => {
   const { navigation } = props;
-  const [data, setData] = useState(books);
   //console.log("ID", props.route.params);
-  const token = props.route.params.token;
+  const screenProps = props.route.params;
+  const token = screenProps.token;
+  const id = screenProps.id;
   const [author, setAuthor] = useState([]);
-  const [aBooks, setBooks] = useState([]);
-  let authorName = "Anne Doe";
-  let authorRating = "4.3";
+  const [numOfBooks, setNum] = useState(15);
+  const [data, setData] = useState(books);
   let totalRatings = "500";
-  let numOfBooks = "15";
   useEffect(() => {
-    getAuthor();
-  }, []);
-
-  const getAuthor = async () => {
-    await axios
-      .get(`http://${ip}:5000/api/authors/${props.route.params.id}`, {
-        headers: { Authorization: `Bearer ${props.route.params.token}` },
+    axios
+      .get(`http://${ip}:5000/api/books/`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        //console.log("author", res.data.author);
+        console.log("get all books", res.data.books);
+        if (res.data) {
+          let authBooks = res.data.books.filter((book) => {
+            return book.authorID === props.route.params.id;
+          });
+          setData(authBooks);
+          setNum(authBooks.length);
+          //console.log("data array:", data);
+        } else {
+          console.log("Could not get data");
+        }
+      })
+      .catch((err) => {
+        console.log("get author books failed", err);
+      });
+    axios
+      .get(`http://${ip}:5000/api/authors/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
         if (res.data.author) {
           console.log("author", res.data.author);
           setAuthor(res.data.author);
-          getBooks();
         } else {
           console.log("Could not get data");
         }
-      });
-  };
-
-  const getBooks = async () => {
-    await axios
-      .get(`http://${ip}:5000/api/books/`, {
-        headers: { Authorization: `Bearer ${props.route.params.token}` },
       })
-      .then((res) => {
-        //console.log("author", res.data.author);
-        if (res.data.books) {
-          //console.log("books", res.data.books);
-          setBooks(
-            res.data.books.filter((book) => {
-              if (book.authorID === author._id) return book;
-            })
-          );
-          //console.log("author books",aBooks)
-        } else {
-          console.log("Could not get data");
-        }
+      .catch((err) => {
+        console.log("get author failed", err);
       });
-  };
-  var books = [
-    {
-      id: "1",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
-    {
-      id: "2",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "3",
-      name: "Oliver Twist",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: true,
-    },
-    {
-      id: "4",
-      name: "Dracula",
-      url: Dracula,
-      author: "Bram Stoker",
-      rating: "4.2",
-      totalRatings: "8,750",
-      favourite: true,
-    },
+  }, []);
+  // const favoriteHandler = (item) => {
+  //   console.log("I am pressed");
+  //   console.log("Item", item);
 
-    {
-      id: "5",
-      name: "Huck",
-      url: Huck,
-      author: "Mark Twain",
-      rating: "4.3",
-      totalRatings: "3,530",
-      favourite: false,
-    },
-    {
-      id: "6",
-      name: "Oliver",
-      url: Oliver,
-      author: "Charles Dickens",
-      rating: "4.7",
-      totalRatings: "2,357",
-      favourite: false,
-    },
-  ];
+  //   const updatedBooks = books.map((book) => {
+  //     if (book.id === item.id) {
+  //       console.log("here");
+  //       book.favourite = !book.favourite;
+  //       console.log("Updated", item);
+  //     }
+  //     return book;
+  //   });
 
-  const favoriteHandler = (item) => {
-    console.log("I am pressed");
-    console.log("Item", item);
-
-    const updatedBooks = books.map((book) => {
-      if (book.id === item.id) {
-        console.log("here");
-        book.favourite = !book.favourite;
-        console.log("Updated", item);
-      }
-      return book;
-    });
-
-    setData(updatedBooks);
-  };
+  //   setData(updatedBooks);
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -212,8 +146,7 @@ const AuthorScreen = (props) => {
             Books by this Author
           </Text>
         </View>
-        {aBooks.length > 0 &&
-          aBooks.map((item) => {
+        {data && data.map((item) => {
             return (
               <View
                 key={item.bookID}
@@ -297,7 +230,6 @@ const AuthorScreen = (props) => {
                   color="#3E155A"
                   style={{ marginTop: 8 }}
                   // onPress={() => setSelectedId(item, index)}
-                  onPress={() => favoriteHandler(item)}
                 />
               </View>
             );

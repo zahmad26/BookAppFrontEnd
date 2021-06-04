@@ -124,11 +124,7 @@ const DiscoverScreen = (props) => {
 
         <View style={{ margin: 24, marginBottom: 0 }}>
           <Tab
-            indicatorStyle={{
-              backgroundColor: "#EB5E0B",
-              width: 96,
-              marginLeft: 7,
-            }}
+            disableIndicator="true"
             variant={"default"}
             onChange={(index) => {
               if (index == 0) {
@@ -144,9 +140,9 @@ const DiscoverScreen = (props) => {
               title="Top"
               value="0"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
-                padding: 5,
+                padding: 3,
                 borderTopLeftRadius: 8,
                 borderBottomLeftRadius: 8,
               }}
@@ -156,9 +152,9 @@ const DiscoverScreen = (props) => {
               title="Trending"
               value="1"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
-                padding: 5,
+                padding: 3,
               }}
               titleStyle={styles.tabTitle}
             />
@@ -166,9 +162,9 @@ const DiscoverScreen = (props) => {
               title="Latest"
               value="2"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
-                padding: 5,
+                padding: 3,
                 borderTopRightRadius: 8,
                 borderBottomRightRadius: 8,
               }}
@@ -280,7 +276,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
 
     padding: 24,
-    paddingTop: 60,
+    paddingTop: 60
   },
   profileImg: {
     width: 60,
@@ -345,7 +341,7 @@ const styles = StyleSheet.create({
   tabTitle: {
     color: "#fff",
     fontFamily: "open-sans",
-    fontSize: 14,
+    fontSize: 13,
     textTransform: "capitalize",
   },
   explore: {

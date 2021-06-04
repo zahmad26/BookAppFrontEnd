@@ -67,13 +67,14 @@ const MyTabs = (props) => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        children={() => <ProfileScreen myProp={props}></ProfileScreen>}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle" color={color} size={size} />
           ),
         }}
+        // initialParams={{ data: props.route }}
       />
     </Tab.Navigator>
   );

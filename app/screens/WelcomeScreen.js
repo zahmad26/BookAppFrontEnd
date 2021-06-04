@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import {
   Image,
   ImageBackground,
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     marginTop: "78%",
     marginLeft: "11%",
     padding: "2%",
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "open-sans",
     borderRadius: 8,
     shadowColor: "#000000",
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: "20%",
     marginLeft: "11%",
     padding: "2%",
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "open-sans",
   },
   tagline: {

@@ -178,8 +178,8 @@ const styles = StyleSheet.create({
   },
   listedBook: {
     borderRadius: 8,
-    width: 75,
-    height: 113,
+    width: 85,
+    height: 123,
   },
   explore: {
     backgroundColor: "#fff",

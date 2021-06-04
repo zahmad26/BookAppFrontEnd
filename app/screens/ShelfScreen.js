@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     height: 233,
   },
   heading: {
-    fontSize: 26,
+    fontSize: 30,
     fontFamily: "playfair-display",
     textAlign: "center",
   },
@@ -309,8 +309,8 @@ const styles = StyleSheet.create({
   },
   listedBook: {
     borderRadius: 8,
-    width: 75,
-    height: 113,
+    width: 85,
+    height: 123,
   },
   buttonText: {
     color: "#6B3F87",

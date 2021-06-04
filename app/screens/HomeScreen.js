@@ -244,7 +244,7 @@ const HomeScreen = (props) => {
               title="Trending"
               value="0"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
                 padding: 3,
                 borderTopLeftRadius: 8,
@@ -256,7 +256,7 @@ const HomeScreen = (props) => {
               title="Popular"
               value="1"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
                 padding: 3,
               }}
@@ -266,7 +266,7 @@ const HomeScreen = (props) => {
               title="Latest"
               value="2"
               buttonStyle={{
-                backgroundColor: "#3E155A",
+                backgroundColor: "#6B3F87",
                 color: "#fff",
                 padding: 3,
                 borderTopRightRadius: 8,
@@ -417,13 +417,13 @@ const styles = StyleSheet.create({
   },
   book: {
     borderRadius: 8,
-    width: 89,
-    height: 140,
+    width: 95,
+    height: 145,
   },
   listedBook: {
     borderRadius: 8,
-    width: 75,
-    height: 113,
+    width: 85,
+    height: 123,
   },
   bookNames: {
     fontFamily: "open-sans",
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
   tabTitle: {
     color: "#fff",
     fontFamily: "open-sans",
-    fontSize: 12,
+    fontSize: 13,
     textTransform: "capitalize",
   },
   explore: {

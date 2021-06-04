@@ -14,20 +14,43 @@ import {
 } from "react-native";
 import StarRating from "react-native-star-rating";
 import ip from "../config";
+import { FontAwesome } from "@expo/vector-icons";
 
 const BookDetailsScreen = (props) => {
   // console.log("here");
-   console.log("ID",props.route.params);
+  console.log("ID", props.route.params);
+  const screenProps = props.route.params;
+  const token = screenProps.token;
+  const id = screenProps.id;
   const [book, setBook] = useState({});
+  const [isFavorite, setFavorite] = useState(false);
   let starCount = 3.5;
 
-  useEffect( () => {
-    getBook();
-  }, []);
-  const getBook = async () => {
-    await axios
-      .get(`http://${ip}:5000/api/books/${props.route.params.id}`, {
-        headers: { Authorization: `Bearer ${props.route.params.token}` },
+  useEffect(() => {
+    axios
+      .get(`http://${ip}:5000/api/books/favourites`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        if (res.data.header.error == 0) {
+          if (
+            res.data.body.favourites.filter((book) => book.bookID === id)
+              .length === 1
+          ) {
+            setFavorite(true);
+          } else {
+            setFavorite(false);
+          }
+        } else {
+          console.log("Could not get data", res.data.header.message);
+        }
+      })
+      .catch((err) => {
+        console.log("get favorites failed", err);
+      });
+    axios
+      .get(`http://${ip}:5000/api/books/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         console.log("book", res.data.book);
@@ -37,11 +60,52 @@ const BookDetailsScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
+      })
+      .catch((err) => {
+        console.log("get book failed", err);
       });
-  };
+  }, []);
+
   function onStarRatingPress(rating) {
     starCount = rating;
   }
+  const favoriteHandler = (isFav) => {
+    console.log("here", isFav);
+    isFav
+      ? axios
+          .put(`http://${ip}:5000/api/books/favourites/remove`, id, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            console.log("fav after remove", res.data.favourites);
+            if (res.data.favourites) {
+              console.log("fav after remove", res.data.favourites);
+              setFavorite(false);
+            } else {
+              console.log("Could not get data");
+            }
+          })
+          .catch((err) => {
+            console.log("remove fav failed", err);
+          })
+      : console.log("here2");
+    axios
+      .put(`http://${ip}:5000/api/books/favourites/add`, id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log("fav after add", res.data.favourites);
+        if (res.data.favourites) {
+          console.log("fav after add", res.data.favourites);
+          setFavorite(true);
+        } else {
+          console.log("Could not get data");
+        }
+      })
+      .catch((err) => {
+        console.log("add fav failed", err);
+      });
+  };
 
   return (
     <SafeAreaView style={styles.sf}>
@@ -53,8 +117,46 @@ const BookDetailsScreen = (props) => {
             borderBottomRightRadius: 45,
           }}
         >
-          <View style={{ marginTop: 56, alignItems: "center" }}>
-            <Image style={styles.bookImg} source={{ uri: book.url }} />
+          <View
+            style={{
+              marginTop: 56,
+              flex: 1,
+              flexDirection: "row",
+              // alignItems: "center",
+            }}
+          >
+            <View style={styles.imgContainer}>
+              <Image style={styles.bookImg} source={{ uri: book.url }} />
+            </View>
+            <View style={styles.bookmarkContainer}>
+              {isFavorite ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    favoriteHandler(isFavorite);
+                  }}
+                >
+                  <FontAwesome
+                    name="bookmark"
+                    size={40}
+                    color="white"
+                    style={{ alignSelf: "auto", marginLeft: 10 }}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    favoriteHandler(isFavorite);
+                  }}
+                >
+                  <FontAwesome
+                    name="bookmark-o"
+                    size={40}
+                    color="white"
+                    style={{ alignSelf: "auto", marginLeft: 10 }}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
           <Text style={styles.name}>{book.title}</Text>
           <Text style={styles.secname}>{book.author}</Text>
@@ -67,7 +169,7 @@ const BookDetailsScreen = (props) => {
                   color: "white",
                   fontSize: 15,
                   fontFamily: "open-sans",
-                  paddingLeft:50
+                  paddingLeft: 50,
                 }}
               >
                 {" "}
@@ -93,7 +195,7 @@ const BookDetailsScreen = (props) => {
                   color: "white",
                   fontSize: 15,
                   fontFamily: "open-sans",
-                  paddingRight:50
+                  paddingRight: 50,
                 }}
               >
                 300
@@ -110,7 +212,7 @@ const BookDetailsScreen = (props) => {
                   color: "#A397AA",
                   fontSize: 15,
                   fontFamily: "open-sans",
-                  paddingLeft:43
+                  paddingLeft: 43,
                 }}
               >
                 {" "}
@@ -136,7 +238,7 @@ const BookDetailsScreen = (props) => {
                   color: "#A397AA",
                   fontSize: 15,
                   fontFamily: "open-sans",
-                  paddingRight:43
+                  paddingRight: 43,
                 }}
               >
                 Pages
@@ -148,8 +250,7 @@ const BookDetailsScreen = (props) => {
           <Text
             style={{
               textAlign: "center",
-              marginTop: 30,
-              fontSize: 16,
+              fontSize: 20,
               fontFamily: "open-sans",
               color: "#6B3F87",
               paddingBottom: 8,
@@ -163,6 +264,7 @@ const BookDetailsScreen = (props) => {
               paddingLeft: 15,
               justifyContent: "center",
               fontFamily: "open-sans",
+              alignContent: "center",
             }}
           >
             {book.description}
@@ -247,7 +349,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+  imgContainer: {
+    flex: 0.8,
+    alignSelf: "center",
+    paddingLeft: "30%",
+  },
+  bookmarkContainer: {
+    flex: 0.2,
+    paddingRight: "9%",
+  },
   name: {
     marginTop: 24,
     fontSize: 20,
@@ -273,7 +383,7 @@ const styles = StyleSheet.create({
 
   secname: {
     marginTop: 15,
-    fontSize: 15,
+    fontSize: 17,
     textAlign: "center",
     color: "#fff",
     fontFamily: "open-sans",

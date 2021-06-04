@@ -46,7 +46,7 @@ const SearchScreen = (props) => {
       //console.log("search filter:", searchFilter);
       return (
         <FlatList
-          style={{ marginLeft: 24, marginRight: 24 }}
+          style={{ marginLeft: 24, marginRight: 24, marginTop:25 }}
           showsVerticalScrollIndicator={false}
           data={searchFilter}
           keyExtractor={(i) => i.bookID}
@@ -264,15 +264,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   heading: {
-    fontSize: 26,
+    fontSize: 30,
     fontFamily: "playfair-display",
-    marginLeft: 24,
+    // marginLeft: 24,
   },
   secheading: {
     paddingTop: 20,
     fontSize: 26,
     fontFamily: "open-sans",
-    marginLeft: 24,
+    // marginLeft: 24,
+    alignSelf:"center"
   },
   searchContainerStyle: {
     backgroundColor: "#fff",
@@ -298,8 +299,8 @@ const styles = StyleSheet.create({
   },
   listedBook: {
     borderRadius: 8,
-    width: 75,
-    height: 113,
+    width: 85,
+    height: 123,
   },
   explore: {
     backgroundColor: "#fff",
