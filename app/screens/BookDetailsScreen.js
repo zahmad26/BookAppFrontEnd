@@ -309,10 +309,12 @@ const BookDetailsScreen = (props) => {
             style={{ flexDirection: "row", marginTop: 5, marginBottom: 20 }}
           >
             <View style={{ flex: 1, paddingLeft: 20 }}>
-              <Image
-                style={styles.profileImg}
-                source={require("../assets/profile.png")}
-              />
+            <FontAwesome
+              name="user-circle-o"
+              size={90}
+              color="#6B3F87"
+              style={styles.profileImg}
+            />
             </View>
             <View style={{ flex: 1, paddingRight: 200, paddingTop: 2 }}>
               <TextInput
@@ -451,7 +453,6 @@ const styles = StyleSheet.create({
     marginTop: 14,
     width: 50,
     height: 50,
-    borderRadius: 100,
   },
 });
 
