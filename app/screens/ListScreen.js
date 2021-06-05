@@ -14,6 +14,7 @@ import ip from "../config";
 
 const ListScreen = (props) => {
   const screenProps = props.route.params;
+  const { navigation } = props;
   //console.log(screenProps);
   const catID = screenProps.id;
   const catName = screenProps.cname;
@@ -154,14 +155,14 @@ const ListScreen = (props) => {
                   </Text>
                 </View>
               </View>
-              <Ionicons
+              {/* <Ionicons
                 name={item.favourite ? "heart" : "heart-outline"}
                 size={35}
                 color="#3E155A"
                 style={{ marginTop: 8 }}
                 // onPress={() => setSelectedId(item, index)}
                 onPress={() => favoriteHandler(item)}
-              />
+              /> */}
             </View>
           );
         }}

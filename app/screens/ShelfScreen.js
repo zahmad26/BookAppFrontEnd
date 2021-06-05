@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import {
   SafeAreaView,
   View,
@@ -28,7 +28,7 @@ const ShelfScreen = (props) => {
   //   getFavs();
   // }, []);
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       getFavs();
     });
     return unsubscribe;
@@ -84,7 +84,7 @@ const ShelfScreen = (props) => {
           style={styles.wrapper}
           showsButtons={true}
           height={240}
-          autoplay={true}
+          autoplay={false}
           containerStyle={{
             marginTop: 20,
             //backgroundColor: "#86469C",
@@ -254,14 +254,14 @@ const ShelfScreen = (props) => {
                   </Text>
                 </View>
               </View>
-              <Ionicons
+              {/* <Ionicons
                 name={item.favourite ? "heart" : "heart-outline"}
                 size={35}
                 color="#3E155A"
                 style={{ marginTop: 8 }}
                 // onPress={() => setSelectedId(item, index)}
                 onPress={() => favoriteHandler(item)}
-              />
+              /> */}
             </View>
           );
         }}

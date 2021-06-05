@@ -224,13 +224,13 @@ const AuthorScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                <Ionicons
+                {/* <Ionicons
                   name={item.favourite ? "heart" : "heart-outline"}
                   size={35}
                   color="#3E155A"
                   style={{ marginTop: 8 }}
                   // onPress={() => setSelectedId(item, index)}
-                />
+                /> */}
               </View>
             );
           })}
