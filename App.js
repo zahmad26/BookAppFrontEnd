@@ -3,7 +3,7 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { NavigationContainer, LogBox } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
-import MyTabs from "./app/navigators/MyTabs";
+import MyTabs from "./app/Navigators/MyTabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./app/screens/LoginScreen";
 import SignUpScreen from "./app/screens/SignupScreen";
