@@ -45,7 +45,8 @@ const DiscoverScreen = (props) => {
         } else {
           console.log("Could not get data");
         }
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log("get latest failed", err);
       });
     axios
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
 
     padding: 24,
-    paddingTop: 60
+    paddingTop: 60,
   },
   profileImg: {
     width: 60,
@@ -316,13 +317,13 @@ const styles = StyleSheet.create({
   },
   book: {
     borderRadius: 8,
-    width: 105,
-    height: 168,
+    width: 125,
+    height: 188,
   },
   author: {
     borderRadius: 100,
-    width: 78,
-    height: 78,
+    width: 88,
+    height: 88,
     marginRight: 0,
   },
   listedBook: {

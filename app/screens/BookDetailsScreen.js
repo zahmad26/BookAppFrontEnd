@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, setState, Component } from "react";
+import React, { useState, useEffect, setState, Component } from "react";
 import axios from "axios";
 import {
   StyleSheet,
@@ -8,17 +8,13 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  ImageBackground,
   ScrollView,
-  Animated,
 } from "react-native";
 import StarRating from "react-native-star-rating";
 import ip from "../config";
 import { FontAwesome } from "@expo/vector-icons";
 
 const BookDetailsScreen = (props) => {
-  // console.log("here");
-  //console.log("ID", props.route.params);
   const screenProps = props.route.params;
   const [id, setID] = useState(screenProps.id);
   const [token, setToken] = useState(screenProps.token);
@@ -164,7 +160,9 @@ const BookDetailsScreen = (props) => {
               )}
             </View>
           </View>
+
           <Text style={styles.name}>{book.title}</Text>
+
           <Text style={styles.secname}>{book.author}</Text>
 
           <View style={{ flexDirection: "row", marginTop: 20 }}>
@@ -175,11 +173,10 @@ const BookDetailsScreen = (props) => {
                   color: "white",
                   fontSize: 15,
                   fontFamily: "open-sans",
-                  paddingLeft: 50,
+                  paddingLeft: 62,
                 }}
               >
-                {" "}
-                {book.rating}{" "}
+                {book.rating}
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -270,7 +267,8 @@ const BookDetailsScreen = (props) => {
               paddingLeft: 15,
               justifyContent: "center",
               fontFamily: "open-sans",
-              alignContent: "center",
+              textAlign: "center",
+              color: "#000",
             }}
           >
             {book.description}
@@ -282,6 +280,7 @@ const BookDetailsScreen = (props) => {
               paddingTop: 20,
               paddingBottom: 15,
               fontFamily: "open-sans",
+              color: "#6B3F87",
             }}
           >
             Rate It
@@ -301,6 +300,7 @@ const BookDetailsScreen = (props) => {
               fontSize: 17,
               paddingBottom: 10,
               fontFamily: "open-sans",
+              color: "#6B3F87",
             }}
           >
             Reviews
@@ -370,6 +370,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: "open-sans",
+    marginLeft: 24,
+    marginRight: 24,
   },
   continutebtn: {
     paddingTop: 15,

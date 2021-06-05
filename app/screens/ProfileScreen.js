@@ -81,16 +81,29 @@ const ProfileScreen = (props) => {
         >
           <View style={styles.container}>
             <Text style={styles.heading}>My Profile</Text>
-            {/* <Image
-              style={styles.profileImg}
-              source={require("../assets/profile.png")}
-            /> */}
-            <FontAwesome
+            <View
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: 100,
+                shadowColor: "#6A2898",
+                shadowOpacity: 0.15,
+                shadowOffset: { width: 0, height: 8 },
+                shadowRadius: 24,
+                elevation: 8,
+                marginRight: 24,
+              }}
+            >
+              <Image
+                style={styles.profile}
+                source={require("../assets/prof.jpg")}
+              />
+            </View>
+            {/*<FontAwesome
               name="user-circle-o"
               size={90}
               color="#6B3F87"
               style={styles.profile}
-            />
+            />*/}
 
             <Text style={styles.name}>
               {firstName} {lastName}
@@ -169,7 +182,11 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     color: "#000",
   },
-  profile: {},
+  profile: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+  },
   label: {
     fontSize: 11,
     alignSelf: "flex-start",

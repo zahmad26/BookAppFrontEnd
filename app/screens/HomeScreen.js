@@ -18,13 +18,10 @@ import ip from "../config";
 const HomeScreen = (props) => {
   const { navigation } = props;
   const screenProps = props.route.params.props.route.params.data.route.params;
-  const userId = screenProps.userId;
   const token = screenProps.token;
   const fname = screenProps.fname;
 
-  //console.log("hello", userId, token);
-
-  //let welcomeMessage = `Good Afternoon, \n${fname}`;
+  const [searchFilter, setSearchFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [favourites, setFavorites] = useState([]);
@@ -33,7 +30,6 @@ const HomeScreen = (props) => {
   const [popular, setPopular] = useState([]);
   const [greeting, setGreeting] = useState("");
   let hour;
-  // const [isfavorite, setFavorite] = useState(false);
 
   useEffect(() => {
     axios
@@ -103,6 +99,7 @@ const HomeScreen = (props) => {
         console.log("fav", res.data.body.favourites);
         if (res.data.header.error == 0) {
           setFavorites(res.data.body.favourites);
+          setSearchFilter(res.data.body.favourites);
         } else {
           console.log("Could not get data", res.data.header.message);
         }
@@ -112,53 +109,18 @@ const HomeScreen = (props) => {
       });
   };
 
-  const updateSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);
-    //console.log(searchTerm);
-  };
+  const updateSearch = (term) => {
+    if (term) {
+      setSearchFilter(
+        favourites.filter((item) =>
+          item.title.toLowerCase().includes(term.toLowerCase())
+        )
+      );
+    } else {
+      setSearchFilter(favourites);
+    }
 
-  // const favoriteHandler = (item, index) => {
-  //   let arr = [...data];
-  //   arr[index].favorite = item.favorite === true ? false : true;
-  //   this.setState({ dataSource: arr });
-  // };
-
-  const favoriteHandler = (item) => {
-    console.log("item pressed", item);
-    item.isFavourite
-      ? axios
-          .put(`http://${ip}:5000/api/books/favourites/remove`, item.bookID, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => {
-            console.log("remove fav", res.data.body);
-          })
-          .catch((err) => {
-            console.log(res.data.header.message, err);
-          })
-      : axios
-          .put(`http://${ip}:5000/api/books/favourites/add`, item.bookID, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => {
-            console.log("add fav", res.data.body);
-          })
-          .catch((err) => {
-            console.log(res.data.header.message, err);
-          });
-    // console.log("I am pressed");
-    // console.log("Item", item);
-
-    // const updatedBooks = books.map((book) => {
-    //   if (book.id === item.id) {
-    //     console.log("here");
-    //     book.favourite = !book.favourite;
-    //     console.log("Updated", item);
-    //   }
-    //   return book;
-    // });
-
-    // setData(updatedBooks);
+    setSearchTerm(term);
   };
 
   return (
@@ -185,7 +147,7 @@ const HomeScreen = (props) => {
           <Text style={styles.heading}>{greeting}</Text>
         </View>
         <SearchBar
-          placeholder="Search..."
+          placeholder="Search your books..."
           onChangeText={updateSearch}
           value={searchTerm}
           containerStyle={styles.searchContainerStyle}
@@ -215,7 +177,7 @@ const HomeScreen = (props) => {
           <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={favourites}
+            data={searchFilter}
             keyExtractor={(item) => item.bookID.toString()}
             renderItem={({ item }) => {
               return (
