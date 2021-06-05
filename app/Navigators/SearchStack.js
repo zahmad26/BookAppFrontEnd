@@ -22,6 +22,11 @@ const SearchStack = (props) => {
         component={ListScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Book Details"
+        component={BookDetailsScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

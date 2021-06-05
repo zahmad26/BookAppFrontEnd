@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, LogBox } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import MyTabs from "./app/navigators/MyTabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,8 +20,10 @@ export default function App() {
   const Stack = createStackNavigator();
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  console.disableYellowBox = true;
   if (fontsLoaded) {
     return (
+      
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash">
           <Stack.Screen

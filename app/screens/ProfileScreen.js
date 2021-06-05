@@ -22,6 +22,7 @@ const ProfileScreen = (props) => {
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
+  const [img, setImg] = React.useState("");
   // let token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDMzYzY0MWUyMTNhMWFiODhlNjc3NCIsImlhdCI6MTYxNzk1MzQwMCwiZXhwIjoxNjIwNTQ1NDAwfQ._K0ehmZK5LA_b0E8-6a89Se1GwJQod9AtUpiNIFyiY8"; //change based on props value
   //console.log(props.myProp);
@@ -41,6 +42,7 @@ const ProfileScreen = (props) => {
           setFirstName(res.data.body.fname);
           setLastName(res.data.body.lname);
           setUserName(res.data.body.username);
+          setImg(res.data.body.img); 
         }
       })
       .catch((err) => {
@@ -90,12 +92,12 @@ const ProfileScreen = (props) => {
                 shadowOffset: { width: 0, height: 8 },
                 shadowRadius: 24,
                 elevation: 8,
-                marginRight: 24,
+
               }}
             >
               <Image
                 style={styles.profile}
-                source={require("../assets/prof.jpg")}
+                source={{uri:img}}
               />
             </View>
             {/*<FontAwesome
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
+    alignSelf:"center",
   },
   label: {
     fontSize: 11,

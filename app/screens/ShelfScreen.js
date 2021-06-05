@@ -194,7 +194,10 @@ const ShelfScreen = (props) => {
             >
               <TouchableOpacity
                 style={[styles.explore, { marginRight: 0, marginLeft: 10 }]}
-                onPress={() => navigation.navigate("Book Details")}
+                onPress={() => navigation.navigate("Book Details",{
+                  id: item.bookID,
+                  token: token,
+                })}
               >
                 <Image style={styles.listedBook} source={{ uri: item.url }} />
               </TouchableOpacity>

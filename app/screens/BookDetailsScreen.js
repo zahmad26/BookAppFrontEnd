@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from "react-native";
 import StarRating from "react-native-star-rating";
 import ip from "../config";
@@ -20,7 +21,9 @@ const BookDetailsScreen = (props) => {
   const [token, setToken] = useState(screenProps.token);
   const [book, setBook] = useState({});
   const [isFavorite, setFavorite] = useState(false);
-  let starCount = 3.5;
+  const [review, setReview] = useState("");
+  const [num, setNum] = useState(0);
+  const [avgRating, setAvgRating] = useState(0);
 
   useEffect(() => {
     axios
@@ -44,15 +47,21 @@ const BookDetailsScreen = (props) => {
       .catch((err) => {
         console.log("get favorites failed", err);
       });
+    getBook();
+  }, [num]);
+
+  const getBook = () => {
     axios
       .get(`http://${ip}:5000/api/books/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        //console.log("book", res.data.book);
+        console.log("book", res.data.book);
         if (res.data.book) {
           //console.log(res.data.book);
           setBook(res.data.book);
+          setNum(res.data.book.reviews.length);
+          setAvgRating(res.data.book.rating);
         } else {
           console.log("Could not get data");
         }
@@ -60,11 +69,29 @@ const BookDetailsScreen = (props) => {
       .catch((err) => {
         console.log("get book failed", err);
       });
-  }, []);
-
-  function onStarRatingPress(rating) {
-    starCount = rating;
-  }
+  };
+  const addRating = (rating) => {
+    console.log(rating);
+    axios
+      .put(
+        `http://${ip}:5000/api/books/rating/add`,
+        { id: id, rating: rating },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log("rating", res.data);
+        if (res.data.header.error == 0) {
+          setAvgRating(res.data.body.avgRating);
+        } else {
+          console.log(res.data.header.message);
+        }
+      })
+      .catch((err) => {
+        console.log("add rating failed", err);
+      });
+  };
   const favoriteHandler = (isFav) => {
     isFav
       ? axios
@@ -107,6 +134,27 @@ const BookDetailsScreen = (props) => {
           });
   };
 
+  const reviewHandler = () => {
+    setNum(num + 1);
+    axios
+      .put(
+        `http://${ip}:5000/api/books/review/add`,
+        { id: id, review: review },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        if (res.data.header.error == 0) {
+          setReview("");
+        } else {
+          console.log(res.data.header.message);
+        }
+      })
+      .catch((err) => {
+        console.log("could not add review", err);
+      });
+  };
   return (
     <SafeAreaView style={styles.sf}>
       <ScrollView>
@@ -176,7 +224,7 @@ const BookDetailsScreen = (props) => {
                   paddingLeft: 62,
                 }}
               >
-                {book.rating}
+                {avgRating}
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -188,7 +236,7 @@ const BookDetailsScreen = (props) => {
                   fontFamily: "open-sans",
                 }}
               >
-                0
+                {num}
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -289,9 +337,9 @@ const BookDetailsScreen = (props) => {
             disabled={false}
             maxStars={5}
             starSize={25}
-            rating={4}
+            rating={avgRating}
             fullStarColor={"#eb5e0b"}
-            selectedStar={(rating) => onStarRatingPress(rating)}
+            selectedStar={(rating) => addRating(rating)}
           />
           <Text
             style={{
@@ -309,38 +357,81 @@ const BookDetailsScreen = (props) => {
             style={{ flexDirection: "row", marginTop: 5, marginBottom: 20 }}
           >
             <View style={{ flex: 1, paddingLeft: 20 }}>
-            <FontAwesome
-              name="user-circle-o"
-              size={90}
-              color="#6B3F87"
-              style={styles.profileImg}
-            />
+              <FontAwesome
+                name="user-circle-o"
+                size={50}
+                color="#6B3F87"
+                style={styles.profileImg}
+              />
             </View>
             <View style={{ flex: 1, paddingRight: 200, paddingTop: 2 }}>
               <TextInput
                 style={styles.input}
                 editable={true}
                 placeholder={"Leave a Review"}
+                onChangeText={setReview}
               />
             </View>
           </View>
-
-          <View
-            style={{ flexDirection: "row", marginTop: 5, marginBottom: 20 }}
+          <TouchableOpacity
+            onPress={() => {
+              reviewHandler(review);
+            }}
+            style={styles.submitButton}
           >
-            <View style={{ flex: 1, paddingLeft: 20 }}>
-              <Image
-                style={styles.profileImg}
-                source={require("../assets/profile.png")}
-              />
-            </View>
-            <View style={{ flex: 1, paddingRight: 200, paddingTop: 2 }}>
-              <Text style={styles.inp}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                venenatis vulputate libero, id vestibulum ante convallis id.
-              </Text>
-            </View>
-          </View>
+            <Text style={{ color: "white", fontSize: 12 }}>SUBMIT</Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              borderBottomColor: "grey",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              alignSelf: "stretch",
+              width: "100%",
+            }}
+          ></View>
+          {book.reviews &&
+            book.reviews.map((rev) => {
+              //console.log(rev.review);
+              return (
+                <View key={rev._id} style={{ flex: 1, flexDirection: "row" }}>
+                  <View
+                    style={{
+                      flex: 0.25,
+                      alignSelf: "flex-start",
+                      marginLeft: 23,
+                    }}
+                  >
+                    <FontAwesome
+                      name="user-circle-o"
+                      size={50}
+                      color="#6B3F87"
+                      style={styles.profileImg}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flex: 0.75,
+                      marginTop: 20,
+                      marginLeft: 1,
+                      paddingLeft: 2,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "open-sans",
+                        fontSize: 10,
+                        color: "grey",
+                      }}
+                    >
+                      {rev.reviewer}
+                    </Text>
+                    <Text style={{ fontFamily: "open-sans", fontSize: 15 }}>
+                      {rev.review}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -375,20 +466,21 @@ const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 24,
   },
-  continutebtn: {
-    paddingTop: 15,
+  submitButton: {
     alignItems: "center",
     backgroundColor: "#6B3F87",
-    padding: 10,
-    height: 48,
-    width: 280,
+    padding: 5,
+    height: 30,
+    width: 80,
     borderRadius: 8,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 14 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 40,
-    fontFamily: "open-sans",
+    marginRight: 75,
+    marginTop: 1,
+    marginBottom: 20,
   },
 
   secname: {
@@ -418,7 +510,7 @@ const styles = StyleSheet.create({
     width: 220,
     margin: 12,
     paddingLeft: 6,
-    marginBottom: 5,
+    marginBottom: 0,
     borderRadius: 8,
     borderColor: "#A397AA",
     borderWidth: 1,
