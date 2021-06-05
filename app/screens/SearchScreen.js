@@ -9,8 +9,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { SearchBar, Tab } from "react-native-elements";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SearchBar } from "react-native-elements";
 import axios from "axios";
 import ip from "../config";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,11 +20,42 @@ const SearchScreen = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { navigation } = props;
   const screenProps = props.route.params.data.route.params.data.route.params;
-  //console.log(screenProps);
-  const userId = screenProps.userId;
   const token = screenProps.token;
-  const fname = screenProps.fname;
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://${ip}:5000/api/books/category`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        // console.log("categories", res.data.categories);
+        if (res.data) {
+          setCategories(res.data.categories);
+        } else {
+          console.log("Could not get data");
+        }
+      })
+      .catch((err) => {
+        console.log("get categories failed", err);
+      });
+    axios
+      .get(`http://${ip}:5000/api/books/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        //console.log("get all books", res.data.books);
+        if (res.data) {
+          setData(res.data.books);
+          setSearchFilter(res.data.books);
+        } else {
+          console.log("Could not get data");
+        }
+      })
+      .catch((err) => {
+        console.log("get books failed", err);
+      });
+  }, []);
 
   const updateSearch = (term) => {
     if (term) {
@@ -46,7 +76,7 @@ const SearchScreen = (props) => {
       //console.log("search filter:", searchFilter);
       return (
         <FlatList
-          style={{ marginLeft: 24, marginRight: 24, marginTop:25 }}
+          style={{ marginLeft: 24, marginRight: 24, marginTop: 25 }}
           showsVerticalScrollIndicator={false}
           data={searchFilter}
           keyExtractor={(i) => i.bookID}
@@ -133,13 +163,6 @@ const SearchScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                {/* <Ionicons
-                  name={item.isFavourite ? "heart" : "heart-outline"}
-                  size={35}
-                  color="#3E155A"
-                  style={{ marginTop: 8 }}
-                  // onPress={() => setSelectedId(item, index)}
-                /> */}
               </View>
             );
           }}
@@ -205,39 +228,6 @@ const SearchScreen = (props) => {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get(`http://${ip}:5000/api/books/category`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        // console.log("categories", res.data.categories);
-        if (res.data) {
-          setCategories(res.data.categories);
-        } else {
-          console.log("Could not get data");
-        }
-      })
-      .catch((err) => {
-        console.log("get categories failed", err);
-      });
-    axios
-      .get(`http://${ip}:5000/api/books/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        //console.log("get all books", res.data.books);
-        if (res.data) {
-          setData(res.data.books);
-          setSearchFilter(res.data.books);
-        } else {
-          console.log("Could not get data");
-        }
-      }).catch((err) => {
-        console.log("get books failed", err);
-      });
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -263,22 +253,20 @@ const SearchScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+
     backgroundColor: "#fff",
     marginTop: 30,
   },
   heading: {
     fontSize: 30,
     fontFamily: "playfair-display",
-    // marginLeft: 24,
   },
   secheading: {
     paddingTop: 20,
     fontSize: 26,
     fontFamily: "open-sans",
-    // marginLeft: 24,
-    alignSelf:"center"
+
+    alignSelf: "center",
   },
   searchContainerStyle: {
     backgroundColor: "#fff",

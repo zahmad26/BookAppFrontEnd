@@ -347,13 +347,6 @@ const HomeScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                {/* <Ionicons
-                  name={item.isFavourite ? "heart" : "heart-outline"}
-                  size={35}
-                  color="#3E155A"
-                  style={{ marginTop: 8 }}
-                  // onPress={() => setSelectedId(item, index)}
-                /> */}
               </View>
             );
           }}
@@ -367,12 +360,10 @@ const HomeScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+
     backgroundColor: "#fff",
   },
   headingAndImgContainer: {
-    // backgroundColor: "#8FBC8F",
     flexDirection: "row",
 
     padding: 24,
@@ -394,7 +385,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     paddingLeft: 24,
     justifyContent: "space-around",
-    // backgroundColor: "#A0A0A0",
+
     flexDirection: "row",
   },
   book: {
@@ -436,7 +427,7 @@ const styles = StyleSheet.create({
   explore: {
     backgroundColor: "#fff",
     borderRadius: 8,
-    shadowColor: "#6A2898",
+    shadowColor: "#000000",
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 8 },
     shadowRadius: 24,
