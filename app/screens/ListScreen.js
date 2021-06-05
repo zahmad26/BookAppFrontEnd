@@ -14,6 +14,7 @@ import ip from "../config";
 
 const ListScreen = (props) => {
   const screenProps = props.route.params;
+  const { navigation } = props;
   //console.log(screenProps);
   const catID = screenProps.id;
   const catName = screenProps.cname;
