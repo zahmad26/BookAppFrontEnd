@@ -8,12 +8,8 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { SearchBar, Tab } from "react-native-elements";
+import { Tab } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Dracula from "../assets/dracula.png";
-import Huck from "../assets/huck.png";
-import Oliver from "../assets/oliver-t.png";
-import author from "../assets/author.jpeg";
 import { ScrollView } from "react-native-gesture-handler";
 import ip from "../config";
 import axios from "axios";
@@ -124,15 +120,6 @@ const DiscoverScreen = (props) => {
           </TouchableOpacity>
           <Text style={styles.heading}>{discoverHeading}</Text>
         </View>
-        {/* <SearchBar
-          placeholder="Search..."
-          onChangeText={updateSearch}
-          value={searchTerm}
-          containerStyle={styles.searchContainerStyle}
-          inputContainerStyle={styles.searchInputContainerStyle}
-          lightTheme={true}
-          inputStyle={styles.searchInputStyle}
-        /> */}
 
         <View style={{ margin: 24, marginBottom: 0 }}>
           <Tab
@@ -279,12 +266,10 @@ const DiscoverScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+
     backgroundColor: "#fff",
   },
   headingAndImgContainer: {
-    // backgroundColor: "#8FBC8F",
     flexDirection: "row",
 
     padding: 24,

@@ -45,22 +45,6 @@ const ListScreen = (props) => {
       });
   }, []);
 
-  const favoriteHandler = (item) => {
-    console.log("I am pressed");
-    console.log("Item", item);
-
-    const updatedBooks = books.map((book) => {
-      if (book.id === item.id) {
-        console.log("here");
-        book.favourite = !book.favourite;
-        console.log("Updated", item);
-      }
-      return book;
-    });
-
-    setData(updatedBooks);
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={{ alignItems: "center", paddingTop: 20, paddingBottom: 20 }}>
@@ -70,10 +54,8 @@ const ListScreen = (props) => {
         style={{ marginLeft: 24, marginRight: 24 }}
         showsVerticalScrollIndicator={false}
         data={data}
-        // keyExtractor={(i) => i.id}
         extraData={selectedId}
         renderItem={({ item, index }) => {
-          // console.log(i);
           return (
             <View
               style={{
@@ -155,14 +137,6 @@ const ListScreen = (props) => {
                   </Text>
                 </View>
               </View>
-              {/* <Ionicons
-                name={item.favourite ? "heart" : "heart-outline"}
-                size={35}
-                color="#3E155A"
-                style={{ marginTop: 8 }}
-                // onPress={() => setSelectedId(item, index)}
-                onPress={() => favoriteHandler(item)}
-              /> */}
             </View>
           );
         }}
