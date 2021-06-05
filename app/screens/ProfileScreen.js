@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import ip from "../config";
+import { FontAwesome } from "@expo/vector-icons";
 
 const ProfileScreen = (props) => {
   const screenProps = props.myProp.route.params;
@@ -21,7 +22,7 @@ const ProfileScreen = (props) => {
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
-  const [img, setImg] = React.useState("");
+  const [img, setImg] = React.useState("https://i.pinimg.com/474x/c7/0c/36/c70c3652b86753708079b17e9033c488.jpg");
   // let token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDMzYzY0MWUyMTNhMWFiODhlNjc3NCIsImlhdCI6MTYxNzk1MzQwMCwiZXhwIjoxNjIwNTQ1NDAwfQ._K0ehmZK5LA_b0E8-6a89Se1GwJQod9AtUpiNIFyiY8"; //change based on props value
   //console.log(props.myProp);
@@ -41,6 +42,7 @@ const ProfileScreen = (props) => {
           setFirstName(res.data.body.fname);
           setLastName(res.data.body.lname);
           setUserName(res.data.body.username);
+          if(res.data.body.img)
           setImg(res.data.body.img); 
         }
       })
@@ -74,6 +76,7 @@ const ProfileScreen = (props) => {
 
   return (
     <SafeAreaView>
+      {/* <ImageBackground source={BackGroundImage} style={styles.bg}> */}
       <ScrollView>
         <ImageBackground
           style={styles.bg}
@@ -98,6 +101,12 @@ const ProfileScreen = (props) => {
                 source={{uri:img}}
               />
             </View>
+            {/*<FontAwesome
+              name="user-circle-o"
+              size={90}
+              color="#6B3F87"
+              style={styles.profile}
+            />*/}
 
             <Text style={styles.name}>
               {firstName} {lastName}
@@ -148,6 +157,7 @@ const ProfileScreen = (props) => {
             </TouchableOpacity>
           </View>
         </ImageBackground>
+        {/* </ImageBackground> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -155,6 +165,8 @@ const ProfileScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    // flex: 2,
+    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
@@ -216,7 +228,7 @@ const styles = StyleSheet.create({
   },
   logOutBtn: {
     alignItems: "center",
-
+    //backgroundColor: "#ffffff",
     padding: 10,
     marginTop: 10,
     marginBottom: 30,
@@ -229,11 +241,19 @@ const styles = StyleSheet.create({
   bg: {
     width: "100%",
     height: "100%",
-
+    // flex: 1,
     resizeMode: "stretch", // or 'stretch',
     justifyContent: "center",
-  },
 
+    // resizeMode: "cover",
+    //justifyContent: "center"
+  },
+  // bg: {
+  //   position:'absolute',
+  //   bottom:0
+  //   // flex: 1,
+  //   // justifyContent: "center"
+  // },
   pwBtn: {
     alignItems: "center",
     padding: 10,
